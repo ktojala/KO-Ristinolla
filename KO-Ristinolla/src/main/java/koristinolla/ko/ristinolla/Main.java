@@ -1,6 +1,7 @@
 package koristinolla.ko.ristinolla;
 
 
+
 import java.util.Scanner;
 
 public class Main {
@@ -22,7 +23,11 @@ public class Main {
         System.out.println("");
         System.out.print("Valintasi (1-2)? ");
         System.out.println("( toiminto 2 ei vielä käytössä )");
+        System.out.println("                 ( siirrytään suoraan peliin!   )");
         System.out.println("");
+        System.out.println("HUOM - ohjelma on kehitysvaiheessa: tulosteessa esiintyy  ");
+        System.out.println("aika ajoin aputulosteita tyyliin 'i tulos stat 1  -1000 0'");
+        System.out.println("----------------------------------------------------------");
 //        opt = Integer.parseInt(lukija.nextLine());
 //        while ((opt < 1) || (opt > 2)) {
 //            System.out.print("Valintasi (1-2)? ");
@@ -30,7 +35,5 @@ public class Main {
 //        }
 
         taly.pelaa();
-
     }
-    
 }
