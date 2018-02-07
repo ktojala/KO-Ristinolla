@@ -36,8 +36,8 @@ public class Tekoaly {
 
         this.lkm = lkm;   // dimension pituus - toistaiseksi tarpeeton
 
-        this.stat   = new int[19];
-        this.tulosstat = new int[19];
+        this.stat   = new int[28];
+        this.tulosstat = new int[28];
         this.pst = new char[28];
         
 // alustetaan tyhjät pelitaulut pelistringiin josta tehdään char-taulukko
@@ -46,7 +46,7 @@ public class Tekoaly {
         this.pst = this.pstring.toCharArray();
         
         this.mones = 0;
-        for (int i = 0; i < 19; i++) {      // vasta 2 3x3 tasoa käytössä
+        for (int i = 0; i < 28; i++) {      // vasta 2 3x3 tasoa käytössä
             this.stat[i] = 0;
             this.tulosstat[i] = -1000000;
         }
@@ -70,8 +70,10 @@ public class Tekoaly {
             pelaajanSiirto();   // ensin kysytään pelaajan siirto
             tulostaPst(this.pst);
             
-            if ((nollaSuora(tasoT1(this.pst))) ||
-                (nollaSuora(tasoT2(this.pst))) ) {
+            if ((nollaSuora(tasoT1(this.pst))) ||  
+                (nollaSuora(tasoT2(this.pst))) ||
+                (nollaSuora(tasoT3(this.pst))) ) 
+                {
                 System.out.println("");
                 System.out.println("Onneksi olkoon, voitit koneen!");
                 System.out.println("");
@@ -93,35 +95,34 @@ public class Tekoaly {
             if (!peliohi) {
                 int isoetu = -1;   // oletusarvo, ei varmaa voittoa
                 int et;            // yksittäisen tason hakutermi 'isoetu'
+                
                 et = etu(0,tasoT1(this.pst));
                 if (et != - 1) isoetu = et;
                 et = etu(1,tasoT2(this.pst));
+                if (et != - 1) isoetu = et;
+                et = etu(2,tasoT3(this.pst));
                 if (et != - 1) isoetu = et;
                 
                 if (isoetu != -1) {
                     System.out.println("isoetu " + isoetu);
                     tulostaPst(this.pst);
-//                    int ii = (isoetu - 1) / 3;
-//                    int jj = (isoetu - 1) % 3;
-//                    this.pst[1+ii*3+jj] = 'x';
-                     this.pst[isoetu] = 'x';
+                    this.pst[isoetu] = 'x';
                     peliohi = true;
                 } else {
                     int isoriski = -1;  // oletusarvo, ei varmaa häviötä
                     int ris;            // yksittäisen tason hakutermi 'isoriski'
+                    
                     ris = riski(0,tasoT1(this.pst));
                     if (ris != - 1) isoriski = ris;
                     ris = riski(1,tasoT2(this.pst));
-                    
                     if (ris != - 1) isoriski = ris;
-//                    isoriski = riski(tasoT1(this.pst));
+                    ris = riski(2,tasoT3(this.pst));
+                    if (ris != - 1) isoriski = ris;
+                    
                     if (isoriski != -1) {
                         System.out.println("isoriski " + isoriski);
                         tulostaPst(this.pst);
-//                        int ii = (isoriski - 1) / 3;
-//                        int jj = (isoriski - 1) % 3;
-//                        this.pst[1+ii*3+jj] = 'x';
-                          this.pst[isoriski] = 'x';
+                        this.pst[isoriski] = 'x';
                     } else {
 
 //                        evaluoi(this.vuoro, tasoT1(this.pst));    // TÄRKEÄ !!
@@ -129,7 +130,8 @@ public class Tekoaly {
                     }
                 }
                 if ((ristiSuora(tasoT1(this.pst))) ||
-                    (ristiSuora(tasoT2(this.pst)))) {
+                    (ristiSuora(tasoT2(this.pst))) ||
+                    (ristiSuora(tasoT3(this.pst)))) {
                     System.out.println("");
                     System.out.println("Kone voitti!");
                     System.out.println("");
@@ -151,52 +153,38 @@ public class Tekoaly {
 * @param vuoro kummalla merkillä pelivuoro (myöhemmin käyttöön!)
 * @param cr pelitilanne pelistringissä
 */
-// @param tila pelitilanne ruudukolla
-
-//    public void evaluoi(char vuoro, char[][] tila) {
     public void evaluoi(char vuoro, char[] cr) {
-        for (int i = 0; i < 19; i++) {
+        
+        for (int i = 0; i < 28; i++) {
             this.stat[i] = 0;
             this.tulosstat[i] = -1000000;
         }
 
-        for (int i = 1; i < 19; i++) { 
-// Koneen ei tässä vaiheessa kannata laittaa ristiä tyhjään ruudukkoon jos
-// toiseen ruudukkoon on avattu peli. Siitä kaksi ulointa if-lausetta.
+        for (int i = 1; i < 28; i++) { 
 
-            if (!( (i<10) && (merkiton(tasoT1(this.pst)) ))) {
-                if (!( (i>=10) && (merkiton(tasoT2(this.pst)) ))) {
-                    
-                    if (this.pst[i] == ' ') {
-                        this.mones = i;
-                        this.pst[i] = 'x';
-//                        this.tulosstat[this.mones] = nolla(tasokoodi,tasoT1(this.pst),2);
+// Koneen ei tässä vaiheessa kannata laittaa ristiä tyhjään 2d-ruudukkoon jos
+// toiseen 2d-ruudukkoon on avattu peli. Sen takia kaksi if-lausetta alla.
 
-                        if (i<10)  {
-                            this.tulosstat[this.mones] = nolla(0,tasoT1(this.pst),2);
-                        } else {
-                            this.tulosstat[this.mones] = nolla(1,tasoT2(this.pst),2);
-                        }
-                        this.pst[i] = ' ';
-                    }
+            if ((i<10) && (merkiton(tasoT1(this.pst)) )) continue;
+            if ((i>9) && (i<19) && (merkiton(tasoT2(this.pst)) )) continue;
+            if ((i>18) && (i<28) && (merkiton(tasoT3(this.pst)) )) continue;
+            
+            if (this.pst[i] == ' ') {
+                this.mones = i;
+                this.pst[i] = 'x';
+
+                if (i<10)  {
+                    this.tulosstat[this.mones] = nolla(0,tasoT1(this.pst),2);
+                } else if (i>18)  {
+                    this.tulosstat[this.mones] = nolla(2,tasoT3(this.pst),2);
+                } else {
+                    this.tulosstat[this.mones] = nolla(1,tasoT2(this.pst),2);
                 }
+                this.pst[i] = ' ';
             }
         }
         
-
-// tämä on poistumassa oleva lohko, korvaava lohko yllä        
-//        for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                if (tila[i][j] == ' ') {
-//                    this.mones = muunna(i, j);
-//                    tila[i][j] = 'x';
-//                    this.tulosstat[this.mones] = nolla(tila, 2);
-//                    tila[i][j] = ' ';
-//                }
-//            }
-//        }
-
-        for (int i = 1; i < 19; i++) {
+        for (int i = 1; i < 28; i++) {
             System.out.println("i tulos stat " + i + "  " + this.tulosstat[i] + " " + stat[i]);
         }
 
@@ -205,7 +193,68 @@ public class Tekoaly {
 
     
 /**
-*  Ristin pelivuoro
+*  Nollan pelivuoro pelipuusssa
+* 
+* @param tasokoodi tutkittavana oleva 3x3 taso
+* @param tila pelitilanne ruudukolla
+* @param taso monesko ruutu täytettävänä simulaatiossa
+* 
+* @return myworst: minimax-algoritmin mukainen palautus
+*/
+    public int nolla(int tasokoodi, char[][] tila, int taso) {
+      
+        if (tasokoodi == 0) {
+            if ((!tyhjia0()) || (this.peliohi)) {
+                if (ristiSuora(tila)) {
+                    this.stat[this.mones]++;
+                    return 1;
+                }
+                return 0;
+            }
+        } else if (tasokoodi == 1){
+            if ((!tyhjia1()) || (this.peliohi)) {
+                if (ristiSuora(tila)) {
+                    this.stat[this.mones]++;
+                    return 1;
+                }
+                return 0;
+            } 
+        } else if (tasokoodi == 2){
+            if ((!tyhjia2()) || (this.peliohi)) {
+                if (ristiSuora(tila)) {
+                    this.stat[this.mones]++;
+                    return 1;
+                }
+                return 0;
+            } 
+        }
+        
+        int myworst = 1000;
+        int newval;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+
+                if (tila[i][j] == ' ') {
+                    tila[i][j] = 'o';
+                    taso++;
+                    newval = risti(tasokoodi, tila, taso);
+
+                    if (newval < myworst) {
+                        myworst = newval;
+                    }
+                    tila[i][j] = ' ';
+                    taso--;
+                }
+            }
+        }
+
+        return myworst;
+    }
+    
+
+/**
+*  Ristin pelivuoro pelipuussa
 * 
 * @param tasokoodi tutkittavana oleva 3x3 taso
 * @param tila pelitilanne tietyllä 3x3 ruudukolla 
@@ -217,10 +266,6 @@ public class Tekoaly {
 
         if (tasokoodi == 0) {
             if ((!tyhjia0()) || (this.peliohi)) {
-                if (ristiSuora(tila)) {
-                    this.stat[this.mones]++;
-                    return 1;
-                } 
                 if (nollaSuora(tila)) {
                     this.stat[this.mones]--;
                     return -1;
@@ -229,10 +274,14 @@ public class Tekoaly {
             }
         } else if (tasokoodi == 1) {
             if ((!tyhjia1()) || (this.peliohi)) {
-                if (ristiSuora(tila)) {
-                    this.stat[this.mones]++;
-                    return 1;
-                } 
+                if (nollaSuora(tila)) {
+                    this.stat[this.mones]--;
+                    return -1;
+                }
+                return 0;
+            }
+        } else if (tasokoodi == 2) {
+            if ((!tyhjia2()) || (this.peliohi)) {
                 if (nollaSuora(tila)) {
                     this.stat[this.mones]--;
                     return -1;
@@ -241,11 +290,9 @@ public class Tekoaly {
             }
         }
 
-        
         int mybest = -1000;
         int newval;
 
-//        if (tasokoodi == 0) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
@@ -264,73 +311,10 @@ public class Tekoaly {
                 }
             }
         }
-//        }
+
         return mybest;
     }
 
-    
-/**
-*  Nollan pelivuoro
-* 
-* @param tasokoodi tutkittavana oleva 3x3 taso
-* @param tila pelitilanne ruudukolla
-* @param taso monesko ruutu täytettävänä simulaatiossa
-* 
-* @return myworst: minimax-algoritmin mukainen palautus
-*/
-    public int nolla(int tasokoodi, char[][] tila, int taso) {
-      
-        if (tasokoodi == 0) {
-            if ((!tyhjia0()) || (this.peliohi)) {
-                if (ristiSuora(tila)) {
-                    this.stat[this.mones]++;
-                    return 1;
-                }
-                if (nollaSuora(tila)) {
-                    this.stat[this.mones]--;
-                    return -1;
-                }
-                return 0;
-            }
-        } else if (tasokoodi == 1){
-            if ((!tyhjia1()) || (this.peliohi)) {
-                if (ristiSuora(tila)) {
-                    this.stat[this.mones]++;
-                    return 1;
-                }
-                if (nollaSuora(tila)) {
-                    this.stat[this.mones]--;
-                    return -1;
-                }
-                return 0;
-            } 
-        }
-        
-        int myworst = 1000;
-        int newval;
-
-        
-//        if (tasokoodi == 0) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-
-                if (tila[i][j] == ' ') {
-                    tila[i][j] = 'o';
-                    taso++;
-                    newval = risti(tasokoodi, tila, taso);
-
-                    if (newval < myworst) {
-                        myworst = newval;
-                    }
-                    tila[i][j] = ' ';
-                    taso--;
-                }
-            }
-        }
-    //    }
-        return myworst;
-    }
-    
     
 /**
 *  Metodi tarkistaa, onko merkillä 'x' ruudukossa voittolinja
@@ -393,7 +377,7 @@ public class Tekoaly {
 */
     public boolean tyhjia() {
 
-        for (int i = 1; i < 19; i++) {
+        for (int i = 1; i < 28; i++) {
             if (this.pst[i] == ' ') {
                 return true;
             }
@@ -433,7 +417,23 @@ public class Tekoaly {
         return false;
     }
     
-  
+    
+/**
+*  Metodi tarkistaa, onko peliruudukossa vielä tyhjiä ruutuja
+* 
+* @return true: ruudukon kaikissa kentissä on risti tai nolla
+*/
+    public boolean tyhjia2() {
+
+        for (int i = 19; i < 28; i++) {
+            if (this.pst[i] == ' ') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
 /**
 * Metodi tarkistaa, onko annettu 3x3 peliruudukko merkitön
 * 
@@ -474,7 +474,6 @@ public class Tekoaly {
     }
 
 
-    
 /**
 * Apumetodi muuntaa peliruudun 3D-koordinaatit yhdeksi yksiselitteiseksi 
 * ja yksiulotteiseksi ruutuluvuksi
@@ -488,6 +487,7 @@ public class Tekoaly {
     public int muunna3(int t, int x, int y) {
         if (t==0) return 1 + 9 * t + 3 * x + y;  // ylätaso
         if (t==1) return 1 + 9 * t + 3 * x + y;  // keskitaso
+        if (t==2) return 1 + 9 * t + 3 * x + y;  // alataso
         return -1;
     }
     
@@ -499,30 +499,13 @@ public class Tekoaly {
 
         int korkein = -1000000;
         int ind =1;
-        for (int i = 1; i < 19; i++) {
+        for (int i = 1; i < 28; i++) {
             if (this.tulosstat[i] > korkein) {
                 korkein = this.tulosstat[i];
                 ind = i;
             }
         }
         this.pst[ind] = 'x';
-                
-//  poistuvaa koodia     ylläoleva for-lause tuli tilalle
-//        int ii = -1;
-//        int jj = -1;
-//        for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                this.mones = muunna(i, j);
-//                if (this.tulosstat[this.mones] > korkein) {
-//                    korkein = this.tulosstat[this.mones];
-//                    ii = i;
-//                    jj = j;
-//                }
-//            }
-//        }
-
-//        this.pst[muunna3(0,ii,jj)] = 'x';
-
 
         System.out.println("");
         System.out.println("Tietokoneen siirto (x)");
@@ -603,7 +586,7 @@ public class Tekoaly {
             {
                 case 1 :
                     this.pst[muunna3(0,rr - 1,ss - 1)] = 'o';
-                    this.pst[1+(rr-1)*3+(ss-1)] = 'o';
+//                    this.pst[1+(rr-1)*3+(ss-1)] = 'o';
                     break;
                 case 2 :
                     this.pst[muunna3(1,rr - 1,ss - 1)] = 'o';
@@ -756,6 +739,26 @@ public class Tekoaly {
         for (int i=0;i<3; i++) {
             for (int j=0;j<3; j++) {
                 taso[i][j] = cr[10+3*i+j];
+            }
+        }
+        return taso;
+    } 
+
+    
+/**
+* Metodi tuottaa pelistring-merkkijonosta tietyn 3x3-taulukon
+* Metodin kutsu on tyypillisesti: tasoT3(this.pst)
+* 
+* @param cr 1-ulotteinen merkkijonotaulukko char[28]
+* 
+* @return  3x3x3 pelin keskitaso T3, joka on char[3][3]-taulukko
+ */
+    public char[][] tasoT3(char[] cr) {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = cr[19+3*i+j];
             }
         }
         return taso;
