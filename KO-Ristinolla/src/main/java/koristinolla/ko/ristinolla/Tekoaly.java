@@ -1,6 +1,5 @@
 package koristinolla.ko.ristinolla;
 
-
 // import java.util.Random;   // Toistaiseksi tarpeeton
 import java.util.Scanner;
 // import java.util.TreeSet;  // Toistaiseksi tarpeeton
