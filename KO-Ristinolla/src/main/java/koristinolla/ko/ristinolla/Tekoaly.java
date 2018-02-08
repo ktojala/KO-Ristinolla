@@ -1,5 +1,6 @@
 package koristinolla.ko.ristinolla;
 
+
 // import java.util.Random;   // Toistaiseksi tarpeeton
 import java.util.Scanner;
 // import java.util.TreeSet;  // Toistaiseksi tarpeeton
@@ -64,15 +65,17 @@ public class Tekoaly {
 */
     public void pelaa() {
         
+        System.out.println("testi" + this.pst);
+        
         while (!peliohi) {
 
             this.vuoro = 'o';
             pelaajanSiirto();   // ensin kysytään pelaajan siirto
             tulostaPst(this.pst);
             
-            if ((nollaSuora(tasoT1(this.pst))) ||  
-                (nollaSuora(tasoT2(this.pst))) ||
-                (nollaSuora(tasoT3(this.pst))) ) 
+            if ((nollaSuora(getTasoT1())) ||  
+                (nollaSuora(getTasoT2())) ||
+                (nollaSuora(getTasoT3())) ) 
                 {
                 System.out.println("");
                 System.out.println("Onneksi olkoon, voitit koneen!");
@@ -96,11 +99,11 @@ public class Tekoaly {
                 int isoetu = -1;   // oletusarvo, ei varmaa voittoa
                 int et;            // yksittäisen tason hakutermi 'isoetu'
                 
-                et = etu(0,tasoT1(this.pst));
+                et = etu(0,getTasoT1());
                 if (et != - 1) isoetu = et;
-                et = etu(1,tasoT2(this.pst));
+                et = etu(1,getTasoT2());
                 if (et != - 1) isoetu = et;
-                et = etu(2,tasoT3(this.pst));
+                et = etu(2,getTasoT3());
                 if (et != - 1) isoetu = et;
                 
                 if (isoetu != -1) {
@@ -112,11 +115,11 @@ public class Tekoaly {
                     int isoriski = -1;  // oletusarvo, ei varmaa häviötä
                     int ris;            // yksittäisen tason hakutermi 'isoriski'
                     
-                    ris = riski(0,tasoT1(this.pst));
+                    ris = riski(0,getTasoT1());
                     if (ris != - 1) isoriski = ris;
-                    ris = riski(1,tasoT2(this.pst));
+                    ris = riski(1,getTasoT2());
                     if (ris != - 1) isoriski = ris;
-                    ris = riski(2,tasoT3(this.pst));
+                    ris = riski(2,getTasoT3());
                     if (ris != - 1) isoriski = ris;
                     
                     if (isoriski != -1) {
@@ -129,9 +132,9 @@ public class Tekoaly {
                         evaluoi(this.vuoro, this.pst);    // TÄRKEÄ !!
                     }
                 }
-                if ((ristiSuora(tasoT1(this.pst))) ||
-                    (ristiSuora(tasoT2(this.pst))) ||
-                    (ristiSuora(tasoT3(this.pst)))) {
+                if ((ristiSuora(getTasoT1())) ||
+                    (ristiSuora(getTasoT2())) ||
+                    (ristiSuora(getTasoT3()))) {
                     System.out.println("");
                     System.out.println("Kone voitti!");
                     System.out.println("");
@@ -165,20 +168,20 @@ public class Tekoaly {
 // Koneen ei tässä vaiheessa kannata laittaa ristiä tyhjään 2d-ruudukkoon jos
 // toiseen 2d-ruudukkoon on avattu peli. Sen takia kaksi if-lausetta alla.
 
-            if ((i<10) && (merkiton(tasoT1(this.pst)) )) continue;
-            if ((i>9) && (i<19) && (merkiton(tasoT2(this.pst)) )) continue;
-            if ((i>18) && (i<28) && (merkiton(tasoT3(this.pst)) )) continue;
+            if ((i<10) && (merkiton(getTasoT1()) )) continue;
+            if ((i>9) && (i<19) && (merkiton(getTasoT2()) )) continue;
+            if ((i>18) && (i<28) && (merkiton(getTasoT3()) )) continue;
             
             if (this.pst[i] == ' ') {
                 this.mones = i;
                 this.pst[i] = 'x';
 
                 if (i<10)  {
-                    this.tulosstat[this.mones] = nolla(0,tasoT1(this.pst),2);
+                    this.tulosstat[this.mones] = nolla(0,getTasoT1(),2);
                 } else if (i>18)  {
-                    this.tulosstat[this.mones] = nolla(2,tasoT3(this.pst),2);
+                    this.tulosstat[this.mones] = nolla(2,getTasoT3(),2);
                 } else {
-                    this.tulosstat[this.mones] = nolla(1,tasoT2(this.pst),2);
+                    this.tulosstat[this.mones] = nolla(1,getTasoT2(),2);
                 }
                 this.pst[i] = ' ';
             }
@@ -706,39 +709,16 @@ public class Tekoaly {
     }
     
 /**
-* Metodi tuottaa pelistring-merkkijonosta tietyn 3x3-taulukon
-* Metodin kutsu on tyypillisesti: tasoT1(this.pst)
-* 
-* @param cr 1-ulotteinen merkkijonotaulukko char[28]
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
 * 
 * @return  3x3x3 pelin ylätaso T1, joka on char[3][3]-taulukko
  */
-    public char[][] tasoT1(char[] cr) {
+    public char[][] getTasoT1() {
         
         char[][] taso = new char[3][3];
         for (int i=0;i<3; i++) {
             for (int j=0;j<3; j++) {
-                taso[i][j] = cr[1+3*i+j];
-            }
-        }
-        return taso;
-    } 
-
-
-/**
-* Metodi tuottaa pelistring-merkkijonosta tietyn 3x3-taulukon
-* Metodin kutsu on tyypillisesti: tasoT2(this.pst)
-* 
-* @param cr 1-ulotteinen merkkijonotaulukko char[28]
-* 
-* @return  3x3x3 pelin keskitaso T2, joka on char[3][3]-taulukko
- */
-    public char[][] tasoT2(char[] cr) {
-        
-        char[][] taso = new char[3][3];
-        for (int i=0;i<3; i++) {
-            for (int j=0;j<3; j++) {
-                taso[i][j] = cr[10+3*i+j];
+                taso[i][j] = this.pst[1+3*i+j];
             }
         }
         return taso;
@@ -746,23 +726,37 @@ public class Tekoaly {
 
     
 /**
-* Metodi tuottaa pelistring-merkkijonosta tietyn 3x3-taulukon
-* Metodin kutsu on tyypillisesti: tasoT3(this.pst)
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
 * 
-* @param cr 1-ulotteinen merkkijonotaulukko char[28]
-* 
-* @return  3x3x3 pelin keskitaso T3, joka on char[3][3]-taulukko
+* @return  3x3x3 pelin keskitaso T2, joka on char[3][3]-taulukko
  */
-    public char[][] tasoT3(char[] cr) {
+    public char[][] getTasoT2() {
         
         char[][] taso = new char[3][3];
         for (int i=0;i<3; i++) {
             for (int j=0;j<3; j++) {
-                taso[i][j] = cr[19+3*i+j];
+                taso[i][j] = this.pst[10+3*i+j];
             }
         }
         return taso;
     } 
+
+    
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  3x3x3 pelin alataso T3, joka on char[3][3]-taulukko
+ */
+    public char[][] getTasoT3() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[19+3*i+j];
+            }
+        }
+        return taso;
+    }
     
     
 // Seuraava metodi ei vielä käytössä    
@@ -785,4 +779,5 @@ public class Tekoaly {
         }
         return taso;
     } 
+
 }
