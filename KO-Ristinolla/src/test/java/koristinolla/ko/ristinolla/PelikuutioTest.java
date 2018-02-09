@@ -1,7 +1,7 @@
 package koristinolla.ko.ristinolla;
 
 /*
- * Test update Feb 8, 2018, at 1540.
+ * Test update Feb 10, 2018, at 0000.
  */
 
 import org.junit.After;
@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 
 public class PelikuutioTest {
     
-    public Pelikuutio tek;
-    public char [] ps;
+    public Pelikuutio pst;
+//    public char [] ps;
     
 //    @BeforeClass
 //    public static void setUpClass() {
@@ -23,15 +23,13 @@ public class PelikuutioTest {
 //    @AfterClass
 //    public static void tearDownClass() {
 //    }
-    
+
+    /**
+     * Pelikuutio  alkuasetus muuttujaan pst
+     */
     @Before
     public void setUp() {
-        
-//        String s = "                            ";
-//        ps = new char[28];
-//        ps = s.toCharArray();
-        tek = new Pelikuutio(3);
- //       char [] tek;
+        pst = new Pelikuutio();
     }
 
 
@@ -52,7 +50,7 @@ public class PelikuutioTest {
     public void testGetTasoT1() {
         System.out.println("getGetTasoT1");
         char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
-        char[][] result = tek.getTasoT1();
+        char[][] result = pst.getTasoT1();
         assertArrayEquals(expResult, result); 
     }
 
@@ -64,7 +62,7 @@ public class PelikuutioTest {
     public void testGetTasoT2() {
         System.out.println("getGetTasoT2");
         char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
-        char[][] result = tek.getTasoT2();
+        char[][] result = pst.getTasoT2();
         assertArrayEquals(expResult, result); 
     }    
     
@@ -76,7 +74,7 @@ public class PelikuutioTest {
     public void testGetTasoT3() {
         System.out.println("getGetTasoT3");
         char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
-        char[][] result = tek.getTasoT3();
+        char[][] result = pst.getTasoT3();
         assertArrayEquals(expResult, result); 
     }
 
@@ -87,24 +85,48 @@ public class PelikuutioTest {
     @Test
     public void testSetMerkki() {
         System.out.println("setMerkki");
-        tek.setMerkki('x',2);
+        pst.setMerkki('x',2);
         char[][] expResult = new char[][]{{' ','x',' '},{' ',' ',' '},{' ',' ',' '}};
-        char[][] result = tek.getTasoT1();
+        char[][] result = pst.getTasoT1();
         assertArrayEquals(expResult, result);
         
         expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
-        result = tek.getTasoT2();
+        result = pst.getTasoT2();
         assertArrayEquals(expResult, result);
         
-        result = tek.getTasoT3();
+        result = pst.getTasoT3();
         assertArrayEquals(expResult, result);
         
-        tek.setMerkki(' ',2);
-        result = tek.getTasoT1();
+        pst.setMerkki(' ',2);
+        result = pst.getTasoT1();
         assertArrayEquals(expResult, result);
+        
+        pst.setMerkki('o',2,2,0);
+        expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{'o',' ',' '}};
+        result = pst.getTasoT3();
+        assertArrayEquals(expResult, result);
+        pst.setMerkki(' ',2,2,0);
     }
     
     
+    /**
+     * Test of merkiton, of class Pelikuutio.
+     */
+    @Test
+    public void testMerkiton() {
+        System.out.println("merkiton");
+        char[][] taso;
+        taso = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        boolean result = pst.merkiton(taso);
+        assertTrue(result);
+        
+        char[][] taso2;
+        taso2 = new char[][]{{' ','o',' '},{' ',' ',' '},{' ',' ',' '}};
+        result = pst.merkiton(taso2);
+        assertFalse(result);
+    }
+    
+
     /**
      * Test of getPst, of class Pelikuutio.
      */
@@ -112,9 +134,70 @@ public class PelikuutioTest {
     public void testGetPst() {
         System.out.println("getPst");
         char[] expResult = new char[]{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-        char[] result = tek.getPst();
+        char[] result = pst.getPst();
         assertArrayEquals(expResult, result);
     }
 
+    
+    /**
+     * Test of muunna3, of class Pelikuutio.
+     */
+    @Test
+    
+    public void testMuunna3() {
+        System.out.println("muunna3");
+        int t = 2;
+        int x = 2;
+        int y = 0;
+        int expResult = 25;
+        int result = pst.muunna3(t, x, y);
+        assertEquals(expResult, result);
+    }
+    
+    
+    /**
+     * Test of ristiSuora, of class Pelikuutio.
+     */
+    @Test
+    public void testRistiSuora() {
+        System.out.println("ristiSuora");
+        char[][] tila;
+        tila = new char[][]{{' ','x',' '},{' ','x',' '},{' ','x',' '}};
+        boolean result = pst.ristiSuora(tila);
+        assertTrue(result);
+
+        char[][] tila2;
+        tila2 = new char[][]{{' ','o',' '},{' ','o',' '},{' ','o',' '}};
+        result = pst.ristiSuora(tila2);
+        assertFalse(result);
+        
+        char[][] tila3;
+        tila3 = new char[][]{{' ','x',' '},{' ','x',' '},{' ',' ',' '}};
+        result = pst.ristiSuora(tila3);
+        assertFalse(result);
+    }
+
+    
+    /**
+     * Test of nollaSuora, of class Pelikuutio.
+     */
+    @Test
+    public void testNollaSuora() {
+        System.out.println("nollaSuora");
+        char[][] tila;
+        tila = new char[][]{{' ','x',' '},{' ','x',' '},{' ','x',' '}};
+        boolean result = pst.nollaSuora(tila);
+        assertFalse(result);
+
+        char[][] tila2;
+        tila2 = new char[][]{{' ','o',' '},{' ','o',' '},{' ','o',' '}};
+        result = pst.nollaSuora(tila2);
+        assertTrue(result);
+        
+        char[][] tila3;
+        tila3 = new char[][]{{' ','o',' '},{' ','x',' '},{' ','o',' '}};
+        result = pst.nollaSuora(tila3);
+        assertFalse(result);
+    }
     
 }

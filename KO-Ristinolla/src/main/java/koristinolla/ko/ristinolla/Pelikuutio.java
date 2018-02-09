@@ -7,7 +7,7 @@ package koristinolla.ko.ristinolla;
  */
 public class Pelikuutio {
 
-    private int lkm;        // dimension pituus - toistaiseksi tarpeeton
+//    private int lkm;        // dimension pituus - toistaiseksi tarpeeton
     private String pstring; // merkkijono joka kuvaa koko 3D-pelitilanteen
                             // yhtenä merkkijonona eli "pelistring"
     private char[] pst;     // pstringiä vastaava char array, josta
@@ -16,12 +16,11 @@ public class Pelikuutio {
 
 /**
 * Luokan Pelikuutio konstruktori
-* 
-* @param lkm kuution kokotekijä
 */
-    public Pelikuutio(int lkm) {
-
-        this.lkm = lkm;           
+//* @param lkm kuution kokotekijä
+//    public Pelikuutio(int lkm) {
+    public Pelikuutio() {
+//        this.lkm = lkm;           
         this.pst = new char[28];
 // alustetaan tyhjät pelitaulut pelistringiin josta tehdään char-taulukko
 // pst:n numerointi:    0123456789012345678901234567
@@ -49,7 +48,8 @@ public class Pelikuutio {
 
         System.out.println("    1   2   3            1   2   3            1   2   3  ");
         System.out.println("  -------------        -------------        -------------");
-        for (int i = 0; i < this.lkm; i++) {
+//        for (int i = 0; i < this.lkm; i++) {
+        for (int i = 0; i < 3; i++) {
             System.out.print(i + 1 + " | " + this.pst[3*i+1] + " | " + this.pst[3*i+2] + " | " + this.pst[3*i+3] + " |      ");
             System.out.print(i + 1 + " | " + this.pst[9+3*i+1] + " | " + this.pst[9+3*i+2] + " | " + this.pst[9+3*i+3] + " |      ");
             System.out.println(i + 1 + " | " + this.pst[18+3*i+1] + " | " + this.pst[18+3*i+2] + " | " + this.pst[18+3*i+3] + " |");
@@ -182,9 +182,7 @@ public class Pelikuutio {
         return taso;
     }
 
-    
- 
-    
+     
 /**
 * Metodi tarkistaa, onko annettu 3x3 peliruudukko merkitön
 * 

@@ -22,7 +22,8 @@ public class Peli {
 */
     public Peli() {
         this.peliohi = false;
-        this.kuutio = new Pelikuutio(3);
+        this.kuutio = new Pelikuutio();
+//        this.kuutio = new Pelikuutio(3);  // kokomitta mukana
     }
 
 
@@ -61,17 +62,17 @@ public class Peli {
 * Pelin avaus
 */
     public void aloitaPeli() {
-        Pelikuutio kuutio = new Pelikuutio(3);
-//        this.kuutio.tulostaPst();
-        this.taly1 = new Tekoaly(kuutio);
+
+        this.taly1 = new Tekoaly(this.kuutio);
         pelaa();
     }
 
 
 /**
-*  Tämä metodi pelaa yhden 3D-Ristinolla -pelin. 
-*  Peli jatkuu kunnes muuttuja peliohi saa arvon true.
-*  Lopuksi julistetaan lopputulos.
+* Tämä metodi pelaa yhden 3D-Ristinolla -pelin. 
+* Peli jatkuu kunnes muuttuja peliohi saa arvon true.
+* Jokainen pelikierros on yksi kierros while-loopissa.
+* Lopuksi julistetaan lopputulos.
 */
     public void pelaa() {
            
@@ -204,5 +205,5 @@ public class Peli {
                     break;
             }
     }
-
+    
 }

@@ -1,10 +1,6 @@
 package koristinolla.ko.ristinolla;
 
-
 // import java.util.Random;   // Toistaiseksi tarpeeton
-import java.util.Scanner;
-// import java.util.TreeSet;  // Toistaiseksi tarpeeton
-
 
 /**
  * Luokka Tekoaly pelaa yhden ristinollapelin.
@@ -21,7 +17,6 @@ public class Tekoaly {
     private char vuoro;      // onko vuoro (o) vai (x)
                              // vuoro: tärkeä jos kun kone pelaa konetta vastaan
     // private Random rd;       // myöhempää kehittelyä varten
-    private Scanner lukija = new Scanner(System.in);
     private boolean peliohi; // true, jos peli on loppuun pelattu!
 
     
