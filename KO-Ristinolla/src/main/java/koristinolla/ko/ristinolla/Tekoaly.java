@@ -1,10 +1,9 @@
 package koristinolla.ko.ristinolla;
 
-
 // import java.util.Random;   // Toistaiseksi tarpeeton
 
 /**
- * Luokka Tekoaly pelaa yhden ristinollapelin.
+ * Luokka Tekoaly on tekoälypelaaja
  */
 public class Tekoaly {
 
@@ -64,7 +63,7 @@ public class Tekoaly {
 * 
 * @param kuutio sisältää pelitilanteen
 */
-    public void talysiirto(Pelikuutio kuutio) {
+    public int talysiirto(Pelikuutio kuutio) {
 
         this.kuutio = kuutio;
         if (!this.peliohi) {
@@ -80,9 +79,9 @@ public class Tekoaly {
                 
             if (isoetu != -1) {
                 System.out.println("isoetu " + isoetu);
-                this.kuutio.setMerkki('x',isoetu);
                 tulostaKoneenSiirto(isoetu);
                 this.peliohi = true;
+                return isoetu;
             } else {
                 int isoriski = -1;  // oletusarvo, ei varmaa häviötä
                 int ris;            // yksittäisen tason hakutermi 'isoriski'
@@ -96,18 +95,19 @@ public class Tekoaly {
                     
                 if (isoriski != -1) {
                     System.out.println("isoriski " + isoriski);
-                    this.kuutio.setMerkki('x',isoriski);
                     tulostaKoneenSiirto(isoriski);
+                    return isoriski;
                     
                 } else {
-                   
+                    
                     evaluoi(this.vuoro);    // TÄRKEÄ !!
                     int siirto = etsiParas();
-                    this.kuutio.setMerkki('x',siirto);
                     tulostaKoneenSiirto(siirto);
+                    return siirto;
                 }
             }
         }  
+        return 0;   // tämä rivi ei toteudu koskaan, mutta metodi vaatii
     }
 
     

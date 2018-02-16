@@ -145,7 +145,8 @@ public class Peli {
             }
 
             if (!peliohi) {
-                this.taly1.talysiirto(this.kuutio);
+                int paikka = this.taly1.talysiirto(this.kuutio);
+                this.kuutio.setMerkki('x',paikka);
                 
                 if ((this.kuutio.ristiSuora(this.kuutio.getTasoT1())) ||
                     (this.kuutio.ristiSuora(this.kuutio.getTasoT2())) ||
