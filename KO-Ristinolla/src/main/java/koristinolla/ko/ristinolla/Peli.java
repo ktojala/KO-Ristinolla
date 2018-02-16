@@ -4,21 +4,21 @@ package koristinolla.ko.ristinolla;
 import java.util.Scanner;
 
 /**
- * Luokka Peli toimii ristinollapelin tekstikäyttöliittymänä.
+ * Luokka Peli toimii myös ristinollapelin tekstikäyttöliittymänä.
  */
 public class Peli {
-    private int optio;        // pelaaja (1) vai kone (2) konetta vastaan
+    private int optio;         // pelaaja (1) vai kone (2) konetta vastaan
     private Pelikuutio kuutio; // pstringiä vastaava char array
-    private boolean peliohi;  // true, jos peli on loppuun pelattu!
-    private char vuoro;       // onko vuoro (o) vai (x)
-                              // tarvitaan sitten kun kone pelaa konetta vastaan
+    private boolean peliohi;   // true, jos peli on loppuun pelattu
+    private char vuoro;        // onko vuoro (o) vai (x)
+                               // tarvitaan kun kone pelaa konetta vastaan
     private Scanner lukija = new Scanner(System.in);
     private Tekoaly taly1;     // yksittäinen tekoäly
-//    private Tekoaly taly2;     // toinen tekoäly
+    private Tekoaly taly2;     // toinen tekoäly
 
     
 /**
-* Luokan Kayttoliittyma tyhjä konstruktori
+* Luokan Kayttoliittyma konstruktori
 */
     public Peli() {
         this.peliohi = false;
@@ -27,6 +27,51 @@ public class Peli {
     }
 
 
+/**
+* Palautetaan kuutio yksinkertaisessa muodossa
+* @return kuutio pelistringinä char array -muodossa
+*/
+    public Pelikuutio getKuutio() {
+        return this.kuutio;
+    }
+
+    
+/**
+* Palautetaan pelioptio
+* @return optio  pelaaja (1) vai kone (2) konetta vastaa
+*/
+    public int getOptio() {
+        return this.optio;
+    }
+
+    
+/**
+* Palautetaan ensimmainen tekoaly
+* @return taly1  tekoalyn merkki
+*/
+    public Tekoaly getTekoaly1() {
+        return this.taly1;
+    }
+    
+    
+/**
+* Palautetaan tieto, onko peliohi
+* @return peliohi
+*/
+    public boolean getPeliohi() {
+        return this.peliohi;
+    }
+
+    
+/**
+* Asetetaan tieto, onko peliohi
+* @param arvo onko peli jo ohi
+*/
+    public void setPeliohi(boolean arvo) {
+        this.peliohi = arvo;
+    }
+
+    
 /**
 * Tulostetaan alkutekstejä
 */
@@ -59,23 +104,18 @@ public class Peli {
 
     
 /**
-* Pelin avaus
-*/
-    public void aloitaPeli() {
-
-        this.taly1 = new Tekoaly(this.kuutio);
-        pelaa();
-    }
-
-
-/**
 * Tämä metodi pelaa yhden 3D-Ristinolla -pelin. 
 * Peli jatkuu kunnes muuttuja peliohi saa arvon true.
 * Jokainen pelikierros on yksi kierros while-loopissa.
 * Lopuksi julistetaan lopputulos.
 */
-    public void pelaa() {
-           
+    public void aloitaPeli() {
+
+        this.taly1 = new Tekoaly(this.kuutio,'x');
+        if (this.optio == 2) {
+            this.taly2 = new Tekoaly(this.kuutio,'o');
+        }
+   
         while (!peliohi) {
 
             this.vuoro = 'o';
@@ -205,5 +245,4 @@ public class Peli {
                     break;
             }
     }
-    
 }

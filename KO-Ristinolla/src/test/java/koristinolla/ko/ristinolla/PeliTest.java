@@ -1,9 +1,5 @@
 package koristinolla.ko.ristinolla;
 
-/*
- * Test update Feb 10, 2018, at 0000.
- */
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,18 +13,64 @@ public class PeliTest {
     private Pelikuutio kuutio;
     
     /**
-     * Peli  alkuasetus muuttujaan peli
+     * Peli  alkuasetukset luokan Peli testeihin
      */
     @Before
     public void setUp() {
         peli = new Peli();
-        kuutio = new Pelikuutio();
-
+        kuutio = new Pelikuutio();  
     }
     
     
+    /**
+     * Test of getKuutio, of class Pelikuutio.
+     */
+    @Test
+    public void testGetKuutio() {
+        System.out.println("Peli: getKuutio");
+        String expResult = "                            ";
+        String result = this.kuutio.getPstring();
+        assertEquals(expResult, result); 
+    }
 
     
+    /**
+     * Test of alkuEsittely and getOptio, of class Peli.
+     */
+    @Test
+    public void testAlkuEsittelyJaGetOptio() {
+        System.out.println("alkuEsittely (tulostuu alle!) ja getOptio");
+        peli.alkuEsittely();
+        int result = peli.getOptio();
+        int expResult  = 1;
+        assertEquals(expResult, result); 
+    }
     
     
+    /**
+     * Test of getPeliohi, of class Peli.
+     */
+    @Test
+    public void testGetPeliohi() {
+        System.out.println("Peli: getPeliohi");
+        boolean expResult = false;
+        boolean result = this.peli.getPeliohi();
+        assertEquals(expResult, result); 
+    }
+    
+    
+    /**
+     * Test of aloitaPeli, of class Peli.
+     */
+    @Test
+    public void testAloitaPeli() {
+        System.out.println("aloitaPeli");
+        peli.setPeliohi(true);
+        peli.aloitaPeli();
+        Tekoaly res = peli.getTekoaly1();
+        char result = res.getVuoro();
+        char expResult  = 'x';
+        assertEquals(expResult, result); 
+    }
+ 
 }

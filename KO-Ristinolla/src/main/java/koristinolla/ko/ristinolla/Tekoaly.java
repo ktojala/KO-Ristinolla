@@ -1,5 +1,6 @@
 package koristinolla.ko.ristinolla;
 
+
 // import java.util.Random;   // Toistaiseksi tarpeeton
 
 /**
@@ -15,7 +16,7 @@ public class Tekoaly {
     private int ruutuNro;    // kertoo ruudun jota parhaillaan simuloidaan
                              // kun pelipuuta evaluoidaan
     private char vuoro;      // onko vuoro (o) vai (x)
-                             // vuoro: tärkeä jos kun kone pelaa konetta vastaan
+                             // vuoro: tärkeä kun kone pelaa konetta vastaan
     // private Random rd;       // myöhempää kehittelyä varten
     private boolean peliohi; // true, jos peli on loppuun pelattu!
 
@@ -25,21 +26,31 @@ public class Tekoaly {
 * 
 * @param kuutio sisältää pelitilanteen
 */
-    public Tekoaly(Pelikuutio kuutio) {
+    public Tekoaly(Pelikuutio kuutio, char vuoro) {
 
         this.stat   = new int[28];
         this.tulosstat = new int[28];
-
+        this.vuoro = vuoro;
         this.kuutio = kuutio;
         this.pst = kuutio.getPst();
         
         this.ruutuNro = 0;
-        for (int i = 0; i < 28; i++) {      // vasta 2 3x3 tasoa käytössä
+        for (int i = 0; i < 28; i++) {      // vasta 3 3x3 tasoa käytössä
             this.stat[i] = 0;
-            this.tulosstat[i] = -1000000;
+            this.tulosstat[i] = -100000;
         }
 
         this.peliohi = false;
+    }
+
+
+/**
+*  Tämä metodi esittelee tekoälyn.
+* 
+* @param vuoro kertoo onko tekoaly risti vai nolla
+*/
+    public char getVuoro() {
+        return this.vuoro;
     }
 
     

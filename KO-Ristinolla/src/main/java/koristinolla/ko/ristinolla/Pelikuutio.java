@@ -30,6 +30,16 @@ public class Pelikuutio {
 
     
 /**
+*  Metodi palauttaa pelikuution merkkijonona
+* 
+* @return this.pstring pelitilanne yksinkertaisena merkkijonona
+*/
+    public String getPstring() {
+        return this.pstring;
+    }
+    
+    
+/**
 *  Metodi antaa pelikuution pelistringinä pst
 * 
 * @return this.pst pelitilanne pelistringissä
@@ -38,7 +48,6 @@ public class Pelikuutio {
         return this.pst;
     }
 
-    
     
 /**
 *  Metodi tulostaa peliruudukon ja pelitilanteen pelistringistä pst
@@ -318,6 +327,5 @@ public class Pelikuutio {
             return true;
         }
         return false;
-    }
-    
+    } 
 }

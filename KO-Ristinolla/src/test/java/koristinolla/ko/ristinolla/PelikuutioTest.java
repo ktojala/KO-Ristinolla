@@ -3,7 +3,6 @@ package koristinolla.ko.ristinolla;
 /*
  * Test update Feb 10, 2018, at 0000.
  */
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,10 +37,28 @@ public class PelikuutioTest {
 //    }
 
     
-//    public PelikuutioTest() {
-//        assertEquals(tek.lkm, 3);
-//    }
-
+    /**
+     * Test of Pstring, of class Pelikuutio.
+     */
+    @Test
+    public void testGetPstring() {
+        System.out.println("Pelikuutio: getPstring");
+        String expResult = "                            ";
+        String result = pst.getPstring();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getPst, of class Pelikuutio.
+     */
+    @Test
+    public void testGetPst() {
+        System.out.println("getPst");
+        char[] expResult = new char[]{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+        char[] result = pst.getPst();
+        assertArrayEquals(expResult, result);
+    }
+    
     
     /**
      * Test of getGetTasoT1, of class Pelikuutio.
@@ -124,18 +141,6 @@ public class PelikuutioTest {
         taso2 = new char[][]{{' ','o',' '},{' ',' ',' '},{' ',' ',' '}};
         result = pst.merkiton(taso2);
         assertFalse(result);
-    }
-    
-
-    /**
-     * Test of getPst, of class Pelikuutio.
-     */
-    @Test
-    public void testGetPst() {
-        System.out.println("getPst");
-        char[] expResult = new char[]{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-        char[] result = pst.getPst();
-        assertArrayEquals(expResult, result);
     }
 
     
