@@ -418,4 +418,59 @@ public class Tekoaly {
         int y = 1+apu%3;
         System.out.println("Tietokoneen siirto (x) : "+t+x+y);
     }
+    
+    
+
+// Seuraavat kaksi metodia tulevat käyttöön 3D-heuristiikassa
+/**
+*  Muodostetaan kolmen merkin merkkijono
+* 
+* @param m1 merkin 1 paikka
+* @param m2 merkin 2 paikka
+* @param m3 merkin 3 paikka
+* 
+* @return merkeistä rakennettu String
+*/
+    public String teeRivi(int m1, int m2, int m3) {
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(kuutio.getMerkki(m1));
+        sb.append(kuutio.getMerkki(m2));
+        sb.append(kuutio.getMerkki(m3));
+
+        return sb.toString();
+    }
+
+
+/**
+*  Perusheuristiikka rivin "arvolle"
+* 
+* @param rivi jokin 3 merkin rivi
+* 
+* @return pisteet: rivin pisteet
+*/
+    public int rivipisteet(String rivi) {
+        
+        int pisteet = 0;
+        if (rivi.equals("xxx")) pisteet = 100;
+        if (rivi.equals("xx ")) pisteet = 10;
+        if (rivi.equals("x x")) pisteet = 10;
+        if (rivi.equals(" xx")) pisteet = 10;
+        if (rivi.equals("x  ")) pisteet = 1;
+        if (rivi.equals(" x ")) pisteet = 1;
+        if (rivi.equals("  x")) pisteet = 1;
+        
+        if (rivi.equals("ooo")) pisteet = -100;
+        if (rivi.equals("oo ")) pisteet = -10;
+        if (rivi.equals("o o")) pisteet = -10;
+        if (rivi.equals(" oo")) pisteet = -10;
+        if (rivi.equals("o  ")) pisteet = -1;
+        if (rivi.equals(" o ")) pisteet = -1;
+        if (rivi.equals("  o")) pisteet = -1;
+        
+        // muut yhdistelmät palauttavat 0
+        
+        return pisteet;
+    }
+    
 }

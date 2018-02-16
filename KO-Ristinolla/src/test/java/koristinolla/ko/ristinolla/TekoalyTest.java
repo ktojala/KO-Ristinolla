@@ -138,5 +138,41 @@ public class TekoalyTest {
         expResult  = -1;
         assertEquals(expResult, result); 
     }
-  
+
+    
+ /**
+     * Test of teeRivi, of class Tekoaly.
+     * Testataan syntyykö oikea string pelikuution paikkaluvuista
+     */
+    @Test
+    public void testTeeRivi() {
+        this.kuutio.setMerkki('x', 1);
+        this.kuutio.setMerkki(' ', 2);
+        this.kuutio.setMerkki('o', 3);
+        String result = this.taly1.teeRivi(1,2,3);
+        String expResult  = "x o";
+        assertEquals(expResult, result); 
+    }
+    
+    
+    /**
+     * Test of teeRivi, of class Tekoaly.
+     * Testataan syntyykö oikea string pelikuution paikkaluvuista
+     */
+    @Test
+    public void testRivipisteet() {
+        
+        int result = this.taly1.rivipisteet("xxx");
+        int expResult  = 100;
+        assertEquals(expResult, result);
+        
+        result = this.taly1.rivipisteet("x x");
+        expResult  = 10;
+        assertEquals(expResult, result);
+
+        result = this.taly1.rivipisteet(" o ");
+        expResult  = -1;
+        assertEquals(expResult, result);
+    }
+
 }
