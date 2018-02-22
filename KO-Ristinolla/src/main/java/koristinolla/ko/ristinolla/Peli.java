@@ -119,10 +119,11 @@ public class Peli {
         while (!peliohi) {
 
             this.vuoro = 'o';
+            if (this.optio == 1) {
+                
+                
             pelaajanSiirto();   // ensin kysytään pelaajan siirto
-            
             this.kuutio.tulostaPst();
-            
             if ((this.kuutio.nollaSuora(this.kuutio.getTasoT1())) ||  
                 (this.kuutio.nollaSuora(this.kuutio.getTasoT2())) ||
                 (this.kuutio.nollaSuora(this.kuutio.getTasoT3())) ) 
@@ -134,7 +135,7 @@ public class Peli {
                 this.kuutio.tulostaPst();
             }
             
-            this.vuoro = 'x';     
+            this.vuoro = 'x';     // tekoäly1
             
 //  Jos tyhjiä ruutuja ei ole, pelin täytyy olla tasapeli.
             if (!this.kuutio.tyhjia()) {
@@ -145,7 +146,9 @@ public class Peli {
             }
 
             if (!peliohi) {
+                
                 int paikka = this.taly1.talysiirto(this.kuutio);
+                
                 this.kuutio.setMerkki('x',paikka);
                 
                 if ((this.kuutio.ristiSuora(this.kuutio.getTasoT1())) ||
@@ -157,6 +160,49 @@ public class Peli {
                     this.peliohi = true;
                     this.kuutio.tulostaPst();
                 }
+            }
+            
+            
+            } else {
+                int paikka = this.taly2.talysiirto(this.kuutio);
+                this.kuutio.tulostaPst();
+                if ((this.kuutio.nollaSuora(this.kuutio.getTasoT1())) ||  
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT2())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT3())) ) 
+                {
+                    System.out.println("");
+                    System.out.println("Kone 2 voitti!");
+                    System.out.println("");
+                    peliohi = true;
+                    this.kuutio.tulostaPst();
+                }
+            
+                this.vuoro = 'x';     // tekoäly1
+            //  Jos tyhjiä ruutuja ei ole, pelin täytyy olla tasapeli.
+                if (!this.kuutio.tyhjia()) {
+                    peliohi = true;
+                    System.out.println("");
+                    System.out.println("TASAPELI");
+                    System.out.println("");
+                }
+
+                if (!peliohi) {
+                
+                    paikka = this.taly1.talysiirto(this.kuutio);
+                
+                    this.kuutio.setMerkki('x',paikka);
+                
+                    if ((this.kuutio.ristiSuora(this.kuutio.getTasoT1())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT2())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT3()))) {
+                        System.out.println("");
+                        System.out.println("Kone 1 voitti!");
+                        System.out.println("");
+                        this.peliohi = true;
+                        this.kuutio.tulostaPst();
+                    }
+                }
+                
             }
         }
     }

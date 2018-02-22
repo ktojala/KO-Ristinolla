@@ -213,6 +213,49 @@ public class Pelikuutio {
     
     
 /**
+* Metodi tarkistaa, onko annettu 3x3 peliruudukko jo täynnä merkkejä
+* 
+* @param tila tutkittava pelitilanteen 3x3 ruudukko
+* 
+* @return true: ruudukossa ei ole tyhjia merkkeja enää
+*/
+    
+    public boolean taynna(char[][] tila) {
+        
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (tila[i][j] == ' ') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+
+    
+    
+/**
+* Metodi selvittää, monessako pelikuution ruudussa on merkki
+* 
+* @param kuutio pelikuutio
+* 
+* @return montako pelimerkkiä kuutiossa on
+*/
+    
+    public int merkkeja(Pelikuutio kuutio) {
+        
+        int lkm = 0;
+        for (int i = 1; i < 28; i++) {
+            if (kuutio.getMerkki(i) != ' ') {
+                lkm++;
+            }
+        }
+        return lkm;
+    }
+    
+    
+/**
 *  Metodi tarkistaa, onko peliruudukossa vielä tyhjiä ruutuja
 * 
 * @return true: ruudukon kaikissa kentissä on risti tai nolla

@@ -68,7 +68,7 @@ public class PeliTest {
         peli.setPeliohi(true);
         peli.aloitaPeli();
         Tekoaly res = peli.getTekoaly1();
-        char result = res.getVuoro();
+        char result = res.getmunMerkki();
         char expResult  = 'x';
         assertEquals(expResult, result); 
     }

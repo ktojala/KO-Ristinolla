@@ -41,10 +41,10 @@ public class TekoalyTest {
      * Test of getVuoro, of class Tekoaly.
      */
     @Test
-    public void testGetVuoro() {
+    public void testgetmunMerkki() {
         System.out.println("aloitaPeli");
 
-        char result = taly1.getVuoro();
+        char result = taly1.getmunMerkki();
         char expResult  = 'x';
         assertEquals(expResult, result); 
     }
@@ -163,11 +163,11 @@ public class TekoalyTest {
     public void testRivipisteet() {
         
         int result = this.taly1.rivipisteet("xxx");
-        int expResult  = 100;
+        int expResult  = 500;
         assertEquals(expResult, result);
         
         result = this.taly1.rivipisteet("x x");
-        expResult  = 10;
+        expResult  = 20;
         assertEquals(expResult, result);
 
         result = this.taly1.rivipisteet(" o ");
