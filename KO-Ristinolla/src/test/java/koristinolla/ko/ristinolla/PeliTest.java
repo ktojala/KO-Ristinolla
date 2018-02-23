@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 public class PeliTest {
     
+    private Kayttoliittyma kayttis;
     public Peli peli;
     private Pelikuutio kuutio;
     
@@ -17,7 +18,8 @@ public class PeliTest {
      */
     @Before
     public void setUp() {
-        peli = new Peli();
+        kayttis = new Kayttoliittyma();
+        peli = new Peli(1);
         kuutio = new Pelikuutio();  
     }
     
@@ -30,19 +32,6 @@ public class PeliTest {
         System.out.println("Peli: getKuutio");
         String expResult = "                            ";
         String result = this.kuutio.getPstring();
-        assertEquals(expResult, result); 
-    }
-
-    
-    /**
-     * Test of alkuEsittely and getOptio, of class Peli.
-     */
-    @Test
-    public void testAlkuEsittelyJaGetOptio() {
-        System.out.println("alkuEsittely (tulostuu alle!) ja getOptio");
-        peli.alkuEsittely();
-        int result = peli.getOptio();
-        int expResult  = 1;
         assertEquals(expResult, result); 
     }
     
@@ -66,7 +55,7 @@ public class PeliTest {
     public void testAloitaPeli() {
         System.out.println("aloitaPeli");
         peli.setPeliohi(true);
-        peli.aloitaPeli();
+        peli.aloitaPeli1(kayttis);
         Tekoaly res = peli.getTekoaly1();
         char result = res.getmunMerkki();
         char expResult  = 'x';

@@ -1,6 +1,5 @@
 package koristinolla.ko.ristinolla;
 
-
 public class Main {
 
 /**
@@ -9,7 +8,7 @@ public class Main {
 */
     public static void main(String[] args) {
         
-        Peli kayttis = new Peli();
+        Kayttoliittyma kayttis = new Kayttoliittyma();
         kayttis.alkuEsittely();
         kayttis.aloitaPeli();
     }

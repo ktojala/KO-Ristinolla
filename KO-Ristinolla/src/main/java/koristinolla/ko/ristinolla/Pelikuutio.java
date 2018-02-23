@@ -231,9 +231,7 @@ public class Pelikuutio {
         }
         return true;
     }
-    
-
-    
+       
     
 /**
 * Metodi selvittää, monessako pelikuution ruudussa on merkki

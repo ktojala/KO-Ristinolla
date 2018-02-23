@@ -1,6 +1,7 @@
 package koristinolla.ko.ristinolla;
 
 // import java.util.Random;   // Toistaiseksi tarpeeton
+// Tällä voi myöhemmin tuoda hieman vaihtelua peliin jos tasaveroisia siirtoja
 
 /**
  * Luokka Tekoaly on tekoälypelaaja
