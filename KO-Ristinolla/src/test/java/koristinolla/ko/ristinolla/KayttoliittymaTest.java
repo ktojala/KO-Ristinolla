@@ -1,5 +1,6 @@
 package koristinolla.ko.ristinolla;
 
+// import java.io.ByteArrayInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,16 +25,20 @@ public class KayttoliittymaTest {
 
     
     /**
-     * Test of alkuEsittely and getOptio, of class Peli.
+     * Test of getOptio, of class Kayttoliittyma.
      */
     @Test
-    public void testAlkuEsittelyJaGetOptio() {
-        System.out.println("alkuEsittely (tulostuu alle!) ja getOptio");
-        kayttis.alkuEsittely();
+    public void testGetOptio() {
+        System.out.println("Kayttoliittyma: getOptio");
+        
+//        ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes());
+//        System.setIn(in);
         int result = kayttis.getOptio();
+
+        System.setIn(System.in);
+        
         int expResult  = 1;
         assertEquals(expResult, result); 
     }
-    
     
 }

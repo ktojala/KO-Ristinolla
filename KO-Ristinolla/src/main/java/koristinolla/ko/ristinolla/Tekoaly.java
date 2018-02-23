@@ -1,7 +1,6 @@
 package koristinolla.ko.ristinolla;
 
-// import java.util.Random;   // Toistaiseksi tarpeeton
-// Tällä voi myöhemmin tuoda hieman vaihtelua peliin jos tasaveroisia siirtoja
+import java.util.Random;
 
 /**
  * Luokka Tekoaly on tekoälypelaaja
@@ -15,25 +14,29 @@ public class Tekoaly {
     private char[] pst;      // pstringiä vastaava char array
     private char munMerkki;  // tämän tekoälyn oma pelimerkki (o) tai (x)
     
-    // private Random rd;       // myöhempää kehittelyä varten
-    private boolean peliohi; // true, jos peli on loppuun pelattu!
+    private Random rd;       // tämä antaa hieman vaihtelua tekoälyn peliin
+    private boolean peliohi;  // true, jos peli on loppuun pelattu!
+    private boolean ekaSiirto; // true, jos tekoälyn (o) ensimmäinen siirto
 
     
 /**
 * Luokan Tekoaly konstruktori
 * 
 * @param kuutio sisältää pelitilanteen
+* @param merkki tämän tekoälyn pelimerkki
 */
     public Tekoaly(Pelikuutio kuutio, char merkki) {
 
         this.evalStat  = new int[28];  // **
-        this.maxSyvyys = 14;
+        this.maxSyvyys = 4;
         
         this.munMerkki = merkki;
         this.kuutio = kuutio;
         this.pst = kuutio.getPst();
 
         this.peliohi = false;
+        this.ekaSiirto = true;
+        this.rd = new Random();
     }
 
 
@@ -46,65 +49,102 @@ public class Tekoaly {
         return this.munMerkki;
     }
 
+       
+/**
+*  Tämä metodi asettaa annetun evalstat-taulukon.
+* 
+* @param taulu evaluointitaulu testausta varten
+*/
+    public void setEvalstat(int[] taulu) {
+        this.evalStat = taulu;
+    }
+    
     
 /**
 *  Tämä metodi tarkistaa, oliko pelaajan siirto voittava siirto. 
 *  Sitten metodi tarkistaa onko voittavia yksinkertaisia siirtoja
-*  tarjolla tietokoneelle ja jos ei ole, kutsutaan metodia evaluoi.
-*  Evaluoi tutkii siirto-optiot ja tallettaa tulokset luokkamuuttujiin
-*  minkä jälkeen metodi etsiParas valitsee parhaan siirron joka.
-*  asetetaan pelistringiin.
+*  tarjolla tietokoneelle ja jos ei ole, aletaan tutkia siirtoja.
+*  pelipuussa. Tämän jälkeen metodilla etsiParas etsitään paras
+*  siirto.
 * 
 * @param kuutio sisältää pelitilanteen
+* 
 * @return tekoalyn pelisiirto
 */
     public int talysiirto(Pelikuutio kuutio) {
 
+// Tekoaäly 2 eli 'o'-merkillä pelaava tekoäly arpoo aloitussiirtonsa
+
+        if (this.ekaSiirto && this.munMerkki=='o') {
+            int paikkanro = rd.nextInt(27)+1;
+            this.ekaSiirto = false;
+            return paikkanro;
+        }
+        
         this.kuutio = kuutio;
         
         if (!this.peliohi) {
+                          
             int isoetu = -1;   // oletusarvo, ei varmaa voittoa
             int et;            // yksittäisen tason hakutermi 'isoetu'
                 
-            et = etu(0,this.kuutio.getTasoT1());
-            if (et != - 1) isoetu = et;
-            et = etu(1,this.kuutio.getTasoT2());
-            if (et != - 1) isoetu = et;
-            et = etu(2,this.kuutio.getTasoT3());
-            if (et != - 1) isoetu = et;
+            if (this.munMerkki=='x') { // allaoleva koodi alunperin ristille
+                et = etu(0,this.kuutio.getTasoT1());
+                if (et != - 1) isoetu = et;
+                et = etu(1,this.kuutio.getTasoT2());
+                if (et != - 1) isoetu = et;
+                et = etu(2,this.kuutio.getTasoT3());
+                if (et != - 1) isoetu = et;
+            } else {                  // ristin etu on nollan riski
+                et = riski(0,this.kuutio.getTasoT1());
+                if (et != - 1) isoetu = et;
+                et = riski(1,this.kuutio.getTasoT2());
+                if (et != - 1) isoetu = et;
+                et = riski(2,this.kuutio.getTasoT3());
+                if (et != - 1) isoetu = et;
+            }
                 
             if (isoetu != -1) {
                 System.out.println("isoetu " + isoetu);
-                tulostaKoneenSiirto(isoetu);
+                tulostaKoneenSiirto(this.munMerkki, isoetu);
                 this.peliohi = true;
                 return isoetu;
             } else {
                 int isoriski = -1;  // oletusarvo, ei varmaa häviötä
                 int ris;            // yksittäisen tason hakutermi 'isoriski'
-                    
-                ris = riski(0,this.kuutio.getTasoT1());
-                if (ris != - 1) isoriski = ris;
-                ris = riski(1,this.kuutio.getTasoT2());
-                if (ris != - 1) isoriski = ris;
-                ris = riski(2,this.kuutio.getTasoT3());
-                if (ris != - 1) isoriski = ris;
-                    
+
+                if (this.munMerkki=='x') { // allaoleva koodi alunperin ristille
+                    ris = riski(0,this.kuutio.getTasoT1());
+                    if (ris != - 1) isoriski = ris;
+                    ris = riski(1,this.kuutio.getTasoT2());
+                    if (ris != - 1) isoriski = ris;
+                    ris = riski(2,this.kuutio.getTasoT3());
+                    if (ris != - 1) isoriski = ris;
+                } else {                   // ristin riski on nollan etu
+                    ris = etu(0,this.kuutio.getTasoT1());
+                    if (ris != - 1) isoriski = ris;
+                    ris = etu(1,this.kuutio.getTasoT2());
+                    if (ris != - 1) isoriski = ris;
+                    ris = etu(2,this.kuutio.getTasoT3());
+                    if (ris != - 1) isoriski = ris;  
+                }    
                 if (isoriski != -1) {
                     System.out.println("isoriski " + isoriski);
-                    tulostaKoneenSiirto(isoriski);
+                    tulostaKoneenSiirto(this.munMerkki,isoriski);
                     return isoriski;
                     
                 } else {
                     
 // alla perustoimintavaihtoehto
                     
-                    
                     for (int i = 1; i < 28; i++) {
                         if (this.kuutio.getMerkki(i) != ' ') {
-                            this.evalStat[i] = -1000;   // ei tutkita;
+                            this.evalStat[i] = 999999;   // ei tutkita;
                             continue;
                         }
-// Tekoälyn ei tässä vaiheessa kannata laittaa ristiä tyhjään 2d-ruudukkoon jos
+                        
+// 999999 tarkoittaa, ettei ruutu ole mukana parhaan siirron valinnassa.
+// Tekoälyn ei tässä vaiheessa kannata laittaa merkkiä tyhjään 2d-ruudukkoon jos
 // toiseen 2d-ruudukkoon on avattu peli.
 // Jos joku ruudukko on täynnä, ruudukon voi avata ellei kolmatta ruudukkoa ole 
 // jo "avattu". Jos kolmas ruudukko on avattu, jatko on tehtävä sinne.
@@ -112,9 +152,8 @@ public class Tekoaly {
 // (Jos kaksi muuta ruudukkoa on täynnä, ruudukon voi taas avata.)
 // Tämä pohdinta koskee vain pelin 3 tason versiota 3x3 ristinollasta.
             
-
                         if ((i<10)  && (this.kuutio.merkiton(this.kuutio.getTasoT1())) ) {
-                            this.evalStat[i] = -1000;
+                            this.evalStat[i] = 999999;
                             if (this.kuutio.taynna(this.kuutio.getTasoT2())) {
                                 if (this.kuutio.merkiton(this.kuutio.getTasoT3())) {
                                     this.evalStat[i] = 0;
@@ -130,7 +169,7 @@ public class Tekoaly {
                             continue;
                         } 
                         if ((i>9) && (i<19)  && (this.kuutio.merkiton(this.kuutio.getTasoT2())) ) {
-                            this.evalStat[i] = -1000;
+                            this.evalStat[i] = 999999;
                             if (this.kuutio.taynna(this.kuutio.getTasoT1())) {
                                 if (this.kuutio.merkiton(this.kuutio.getTasoT3())) {
                                     this.evalStat[i] = 0;
@@ -146,7 +185,7 @@ public class Tekoaly {
                             continue;
                         } 
                         if ((i>18) && (i<28)  && (this.kuutio.merkiton(this.kuutio.getTasoT3())) ){
-                            this.evalStat[i] = -1000;
+                            this.evalStat[i] = 999999;
                             if (this.kuutio.taynna(this.kuutio.getTasoT1())) {
                                 if (this.kuutio.merkiton(this.kuutio.getTasoT2())) {
                                     this.evalStat[i] = 0;
@@ -161,28 +200,40 @@ public class Tekoaly {
                             }
                             continue;
                         } 
-                        
-                        if (i<10) {
-                            this.kuutio.setMerkki('x',i);
-                            this.evalStat[i] +=  uusNolla(0,0,this.kuutio.getTasoT1(),this.kuutio);      
-                        } else if ((i>9) && (i<19))  {
-                            this.kuutio.setMerkki('x',i);
-                            this.evalStat[i] +=  uusNolla(0,1,this.kuutio.getTasoT2(),this.kuutio);
-                        } else if ((i>18) && (i<28))  {
-                            this.kuutio.setMerkki('x',i);
-                            this.evalStat[i] +=  uusNolla(0,2,this.kuutio.getTasoT3(),this.kuutio);
+
+                        if (this.munMerkki=='x') {  // koodi alunperin ristille
+                            if (i<10) {
+                                this.kuutio.setMerkki(this.munMerkki,i);
+                                this.evalStat[i] +=  uusNolla(0,0,this.kuutio.getTasoT1(),this.kuutio);      
+                            } else if ((i>9) && (i<19))  {
+                                this.kuutio.setMerkki(this.munMerkki,i);
+                                this.evalStat[i] +=  uusNolla(0,1,this.kuutio.getTasoT2(),this.kuutio);
+                            } else if ((i>18) && (i<28))  {
+                                this.kuutio.setMerkki(this.munMerkki,i);
+                                this.evalStat[i] +=  uusNolla(0,2,this.kuutio.getTasoT3(),this.kuutio);
+                            }
+                        } else {
+                            if (i<10) {
+                                this.kuutio.setMerkki(this.munMerkki,i);
+                                this.evalStat[i] +=  uusRisti(0,0,this.kuutio.getTasoT1(),this.kuutio);      
+                            } else if ((i>9) && (i<19))  {
+                                this.kuutio.setMerkki(this.munMerkki,i);
+                                this.evalStat[i] +=  uusRisti(0,1,this.kuutio.getTasoT2(),this.kuutio);
+                            } else if ((i>18) && (i<28))  {
+                                this.kuutio.setMerkki(this.munMerkki,i);
+                                this.evalStat[i] +=  uusRisti(0,2,this.kuutio.getTasoT3(),this.kuutio);
+                            } 
                         }
                         this.kuutio.setMerkki(' ',i);
                     }
 
-//                    evaluoi(this.vuoro);    // TÄRKEÄ !!
                     int siirto = etsiParas();
-                    tulostaKoneenSiirto(siirto);
+                    tulostaKoneenSiirto(this.munMerkki,siirto);
                     return siirto;
                 }
             }
-        }  
         
+        }
         return 0;   // tämä rivi ei toteudu koskaan, mutta metodi vaatii
     }
 
@@ -193,19 +244,20 @@ public class Tekoaly {
 */
     public int etsiParas() {
 
-        int korkein = -1000000;
+        int korkein = -10000;
         int ind =1;
         for (int i = 1; i < 28; i++) {
 
 // annetaan pieni lisäpainotus keskiruudulle!
-
-            if (i==5) this.evalStat[5]++;
-            if (i==14) this.evalStat[14]++;
-            if (i==23) this.evalStat[23]++;
+            if (this.evalStat[i] != 999999) {
+                if (i==5) this.evalStat[5]++;
+                if (i==14) this.evalStat[14]++;
+                if (i==23) this.evalStat[23]++;
             
-            if (this.evalStat[i] > korkein) {
-                korkein = this.evalStat[i];
-                ind = i;
+                if (this.evalStat[i] > korkein) {
+                    korkein = this.evalStat[i];
+                    ind = i;
+                }
             }
             System.out.println("i evalstat " + i + " " + this.evalStat[i]);
         }
@@ -325,15 +377,16 @@ public class Tekoaly {
 /**
 * Metodi tulostaa tietokoneen tekemän siirron
 * 
+* @param merkki tekoälyn pelimerkki
 * @param ind paikka pelistringissä
 */
-    public void tulostaKoneenSiirto(int ind) {
+    public void tulostaKoneenSiirto(char merkki, int ind) {
         System.out.println("");
         int t = 1+(ind-1)/9;
         int apu = ind-((t-1)*9)-1;
         int x = 1+apu/3;
         int y = 1+apu%3;
-        System.out.println("Tietokoneen siirto (x) : "+t+x+y);
+        System.out.println("Tekoälyn siirto ("+merkki+") : "+t+x+y);
     }
     
     
@@ -381,6 +434,7 @@ public class Tekoaly {
                 lisapisteet += rivipisteet(teeRivi(21,23,25));  
             }
             if (this.munMerkki == 'o') lisapisteet = -lisapisteet;
+//            System.out.println("Nol lisäpist "+ lisapisteet );
             return lisapisteet;
             
         } else {     // tutkitaan seuraava syvyystaso
@@ -401,9 +455,11 @@ public class Tekoaly {
             }
             
             int pienin = 999999;
-            for (int i = 0; i < 28; i++) {
+            for (int i = 1; i < 28; i++) {
                 if (evalStat1[i] < pienin) pienin = evalStat1[i];
+//                System.out.println("Nol i evals "+ i + " " + evalStat1[i]);
             }
+//            System.out.println("Nol syvyys ja pienin " + syvyys + " " +pienin);
             return pienin; 
         }
     }
@@ -422,8 +478,6 @@ public class Tekoaly {
 
         int lisapisteet = 0;   //
 
-        
-        
         if (syvyys == this.maxSyvyys) {
             if (tasokoodi == 0) {               // ylataso
                 lisapisteet += rivipisteet(teeRivi(1,2,3)); 
@@ -454,6 +508,7 @@ public class Tekoaly {
                 lisapisteet += rivipisteet(teeRivi(21,23,25));  
             }
             if (this.munMerkki == 'x') lisapisteet = -lisapisteet;
+//            System.out.println("Ris lisäpist "+ lisapisteet );
             return lisapisteet;
             
         } else {     // tutkitaan seuraava syvyystaso
@@ -474,11 +529,13 @@ public class Tekoaly {
             }
             
             int suurin = -999999;
-            for (int i = 0; i < 28; i++) {
+            for (int i = 1; i < 28; i++) {
                 if (evalStat1[i] > suurin) suurin = evalStat1[i];
+//                System.out.println("Ris i evals "+ i + " " + evalStat1[i]);
             }
+//            System.out.println("Ris syvyys ja suurin " + syvyys + " " +suurin);
             return suurin;
-        }
+        }  
     }
 
 

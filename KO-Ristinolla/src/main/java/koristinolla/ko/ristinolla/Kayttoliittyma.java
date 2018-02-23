@@ -15,6 +15,7 @@ public class Kayttoliittyma {
 * Luokan Kayttoliittyma tyhjä konstruktori
 */
     public Kayttoliittyma() {
+        this.optio = 1;              // oletusarvo
     }
 
     
@@ -24,28 +25,15 @@ public class Kayttoliittyma {
     public void alkuEsittely() {
 
         Scanner lukija = new Scanner(System.in);
-        
-        System.out.println("RISTINOLLA");
         System.out.println("");
-        System.out.println(" Pelaa tietokonetta vastaan     (1)");
-        System.out.println(" Tietokone tietokonetta vastaan (2)");
+        System.out.println("3D-RISTINOLLA");
         System.out.println("");
-        System.out.print("Valintasi (1-2)? ");
-        System.out.println("( toiminto 2 ei vielä käytössä )");
-        System.out.println("                 ( siirrytään suoraan peliin!   )");
+        System.out.println("HUOM 1 - ohjelma on kehitysvaiheessa: kyseessä ei vielä");
+        System.out.println("  ole täydellinen 3x3x3 -peli vaan 3-tasoinen 3x3 -peli.");
         System.out.println("");
-        System.out.println("HUOM - ohjelma on kehitysvaiheessa: tulosteessa esiintyy  ");
-        System.out.println("aika ajoin aputulosteita tyyliin 'i evalstat 1  -1000'");
+        System.out.println("HUOM 2 - ohjelma on kehitysvaiheessa: tulosteessa esiintyy");
+        System.out.println("  aika ajoin aputulosteita tyyliin 'i evalstat 1  -1000'");
         System.out.println("----------------------------------------------------------");
-        System.out.println("");
-        System.out.println("");
-        
-        this.optio = 1;
-//      int opt = Integer.parseInt(lukija.nextLine());
-//        while ((opt < 1) || (opt > 2)) {
-//            System.out.print("Valintasi (1-2)? ");
-//            this.optio = Integer.parseInt(lukija.nextLine());
-//        }
     }
  
     
@@ -55,42 +43,61 @@ public class Kayttoliittyma {
     public void aloitaPeli() {
     
         String aloita = "1";
+        String itseVaiTekoAly;
+        
         while (aloita.equals("1")) {
 
+            itseVaiTekoAly = this.kysyKoneVaiTa();
+            if (itseVaiTekoAly.equals("1")) this.optio = 1;
+            if (itseVaiTekoAly.equals("2")) this.optio = 2;
+        
+            Peli uuspeli = new Peli(this.optio);   
+            uuspeli.aloitaPeli1(this);
             aloita = this.kysyUudesta();
-            if (aloita.equals("1")) {
-                System.out.println("");
-                System.out.println("RISTINOLLA");
-                System.out.println("");
-                System.out.println(" Pelaa tietokonetta vastaan     (1)");
-                System.out.println(" Tietokone tietokonetta vastaan (2)");
-                System.out.println("");
-                System.out.print("Valintasi (1-2)? "); 
-                this.optio = 1;
-                Peli uuspeli = new Peli(this.optio);   
-                uuspeli.aloitaPeli1(this);
-            }
         } 
     }
  
     
 /**
-* Tämä metodi luo ja aloittaa uuden 3D-Ristinolla -pelin.
+* Tämä metodi kysyy pelaajalta, haluaako hän pelata vielä yhden pelin.
 * 
 * @return uusi peli "1" vai lopeta "2"
 */
     public String kysyUudesta() {
             System.out.println("Haluatko pelata uuden pelin?");
-            System.out.println("Kyllä - 1");
-            System.out.println("Ei    - 2");
+            System.out.println("Kyllä (1)");
+            System.out.println("Ei    (2)");
+            System.out.println("");
+            System.out.print("> ");
             String aloita = lukija.nextLine();
             return aloita;
     }
-    
 
+    
+/**
+* Tämä metodi kysyy pelaajalta, haluaako hän pelata itse tekoälyä vastaan.
+* vai laittaa kaksi tekoälyä pelaamaan toisiaan vastaan
+* 
+* @return pelaajan vastaus, pelaako itse tekoälyä vastaan (1) vai ei (2)
+*/
+    public String kysyKoneVaiTa() {
+                System.out.println("");
+                System.out.println("RISTINOLLA");
+                System.out.println("");
+                System.out.println(" Pelaa itse tekoälyä vastaan     (1)");
+                System.out.println(" Laita tekoäly tekoälyä vastaan  (2)");
+                System.out.println("");
+                System.out.print("Valintasi (1-2)? ");
+                System.out.println("");
+                System.out.print("> ");
+            String kumpi = lukija.nextLine();
+            return kumpi;
+    }
+    
+    
 /**
 * Palautetaan pelioptio
-* @return optio  pelaaja (1) vai kone (2) konetta vastaa
+* @return optio  (pelaaja (1) vai kone (2) konetta vastaan)
 */
     public int getOptio() {
         return this.optio;

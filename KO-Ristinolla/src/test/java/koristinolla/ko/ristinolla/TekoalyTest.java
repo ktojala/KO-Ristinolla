@@ -19,31 +19,29 @@ public class TekoalyTest {
     private char[] pst;      // pstringiä vastaava char array
     private int ruutuNro;    // kertoo ruudun jota parhaillaan simuloidaan
                              // kun pelipuuta evaluoidaan
-//    private char vuoro;      // onko vuoro (o) vai (x)
-                             // vuoro: tärkeä kun kone pelaa konetta vastaan
     // private Random rd;       // myöhempää kehittelyä varten
     private boolean peliohi; // true, jos peli on loppuun pelattu!
 
     
     /**
-     * Peli  alkuasetukset luokan Peli testeihin
+     * Peli  alkuasetukset luokan Tekoaly testeihin
      */
     @Before
     public void setUp() {
 //        Peli peli = new Peli();
         this.kuutio = new Pelikuutio();  // tyhja pelikuutio
-        char vuoro = 'x';
-        this.taly1 = new Tekoaly(kuutio,vuoro);
+        char merkki = 'x';
+        this.taly1 = new Tekoaly(kuutio,merkki);
+
     }
 
 
     /**
-     * Test of getVuoro, of class Tekoaly.
+     * Test of getmunMerkki, of class Tekoaly.
      */
     @Test
-    public void testgetmunMerkki() {
-        System.out.println("aloitaPeli");
-
+    public void testGetmunMerkki() {
+        System.out.println("Tekoaly: getmunMerkki");
         char result = taly1.getmunMerkki();
         char expResult  = 'x';
         assertEquals(expResult, result); 
@@ -51,11 +49,30 @@ public class TekoalyTest {
 
   
     /**
+     * Test of etsiParas, of class Tekoaly.
+     */
+    @Test
+    public void testEtsiParas() {
+        System.out.println("Tekoaly: etsiParas");
+        int[] taulu = new int[28];
+        taulu[2]=5;
+        taulu[5]=3;
+        taulu[8]=-1;
+        taulu[18]=0;
+        this.taly1.setEvalstat(taulu);
+        int result = this.taly1.etsiParas();
+        int expResult = 2;
+        assertEquals(expResult, result);
+    }
+    
+    
+    /**
      * Test of talysiirto, of class Tekoaly.
      * Testataan kaksi perustilannetta, joissa iso etu tai iso riski
      */
     @Test
-    public void talysiirto() {
+    public void testTalysiirto() {
+        System.out.println("Tekoaly: talysiirto");
         this.kuutio.setMerkki('o', 1);
         this.kuutio.setMerkki('o', 2);
         this.peliohi = false;
@@ -79,8 +96,8 @@ public class TekoalyTest {
      * Selvitetään onko tekoalylla (x) iso etu
      */
     @Test
-    public void etu() {
-
+    public void testEtu() {
+        System.out.println("Tekoaly: etu");
         char[][] rivi = new char[][]{{'x','x',' '},{' ',' ',' '},{' ',' ',' '}};
         int result = this.taly1.etu(0,rivi);
         int expResult  = 3;
@@ -112,8 +129,8 @@ public class TekoalyTest {
      * Selvitetään onko tekoalylla (x) iso riski
      */
     @Test
-    public void riski() {
-
+    public void testRiski() {
+        System.out.println("Tekoaly: riski");
         char[][] rivi = new char[][]{{'o','o',' '},{' ',' ',' '},{' ',' ',' '}};
         int result = this.taly1.riski(0,rivi);
         int expResult  = 3;
@@ -146,6 +163,7 @@ public class TekoalyTest {
      */
     @Test
     public void testTeeRivi() {
+        System.out.println("Tekoaly: teerivi");
         this.kuutio.setMerkki('x', 1);
         this.kuutio.setMerkki(' ', 2);
         this.kuutio.setMerkki('o', 3);
@@ -156,12 +174,12 @@ public class TekoalyTest {
     
     
     /**
-     * Test of teeRivi, of class Tekoaly.
+     * Test of rivipisteet, of class Tekoaly.
      * Testataan syntyykö oikea string pelikuution paikkaluvuista
      */
     @Test
     public void testRivipisteet() {
-        
+        System.out.println("Tekoaly: rivipisteet");
         int result = this.taly1.rivipisteet("xxx");
         int expResult  = 500;
         assertEquals(expResult, result);

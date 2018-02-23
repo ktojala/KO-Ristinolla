@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 
 public class PeliTest {
     
-    private Kayttoliittyma kayttis;
     public Peli peli;
     private Pelikuutio kuutio;
+    private Kayttoliittyma kayttis;
     
     /**
      * Peli  alkuasetukset luokan Peli testeihin
@@ -34,7 +34,19 @@ public class PeliTest {
         String result = this.kuutio.getPstring();
         assertEquals(expResult, result); 
     }
-    
+
+
+    /**
+     * Test of getOptio, of class Peli.
+     */
+    @Test
+    public void testGetOptio() {
+        System.out.println("Peli: getOptio");
+        int expResult = 1;
+        int result = this.peli.getOptio();
+        assertEquals(expResult, result);
+    }
+
     
     /**
      * Test of getPeliohi, of class Peli.
@@ -52,8 +64,8 @@ public class PeliTest {
      * Test of aloitaPeli, of class Peli.
      */
     @Test
-    public void testAloitaPeli() {
-        System.out.println("aloitaPeli");
+    public void testAloitaPeli1() {
+        System.out.println("aloitaPeli1");
         peli.setPeliohi(true);
         peli.aloitaPeli1(kayttis);
         Tekoaly res = peli.getTekoaly1();

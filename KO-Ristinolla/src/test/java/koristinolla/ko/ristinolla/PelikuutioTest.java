@@ -1,8 +1,6 @@
 package koristinolla.ko.ristinolla;
 
-/*
- * Test update Feb 10, 2018, at 0000.
- */
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,7 +51,7 @@ public class PelikuutioTest {
      */
     @Test
     public void testGetPst() {
-        System.out.println("getPst");
+        System.out.println("Pelikuutio: getPst");
         char[] expResult = new char[]{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
         char[] result = pst.getPst();
         assertArrayEquals(expResult, result);
@@ -65,7 +63,7 @@ public class PelikuutioTest {
      */
     @Test
     public void testGetTasoT1() {
-        System.out.println("getGetTasoT1");
+        System.out.println("Pelikuutio: getGetTasoT1");
         char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         char[][] result = pst.getTasoT1();
         assertArrayEquals(expResult, result); 
@@ -77,7 +75,7 @@ public class PelikuutioTest {
      */
     @Test
     public void testGetTasoT2() {
-        System.out.println("getGetTasoT2");
+        System.out.println("Pelikuutio: getGetTasoT2");
         char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         char[][] result = pst.getTasoT2();
         assertArrayEquals(expResult, result); 
@@ -89,7 +87,7 @@ public class PelikuutioTest {
      */
     @Test
     public void testGetTasoT3() {
-        System.out.println("getGetTasoT3");
+        System.out.println("Pelikuutio: getGetTasoT3");
         char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         char[][] result = pst.getTasoT3();
         assertArrayEquals(expResult, result); 
@@ -101,7 +99,7 @@ public class PelikuutioTest {
      */
     @Test
     public void testSetMerkki() {
-        System.out.println("setMerkki");
+        System.out.println("Pelikuutio: setMerkki");
         pst.setMerkki('x',2);
         char[][] expResult = new char[][]{{' ','x',' '},{' ',' ',' '},{' ',' ',' '}};
         char[][] result = pst.getTasoT1();
@@ -125,13 +123,31 @@ public class PelikuutioTest {
         pst.setMerkki(' ',2,2,0);
     }
     
+
+    /**
+     * Test of merkkeja, of class Pelikuutio.
+     */
+    @Test
+    public void testMerkkeja() {
+        System.out.println("Pelikuutio: merkkeja");
+        pst.setMerkki('x',2);
+        pst.setMerkki('o',16);
+        pst.setMerkki('o',17);
+        int result = pst.merkkeja(pst);
+        int expResult = 3;
+        assertEquals(expResult, result);
+        pst.setMerkki(' ',2);
+        pst.setMerkki(' ',16);
+        pst.setMerkki(' ',17);
+    }
+    
     
     /**
      * Test of merkiton, of class Pelikuutio.
      */
     @Test
     public void testMerkiton() {
-        System.out.println("merkiton");
+        System.out.println("Pelikuutio: merkiton");
         char[][] taso;
         taso = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         boolean result = pst.merkiton(taso);
@@ -149,7 +165,7 @@ public class PelikuutioTest {
      */
     @Test
     public void testTaynna() {
-        System.out.println("taynna");
+        System.out.println("Pelikuutio: taynna");
         char[][] taso;
         taso = new char[][]{{'x','x','o'},{'o','o','x'},{'x','o','x'}};
         boolean result = pst.taynna(taso);
@@ -168,7 +184,7 @@ public class PelikuutioTest {
     @Test
     
     public void testMuunna3() {
-        System.out.println("muunna3");
+        System.out.println("Pelikuutio: muunna3");
         int t = 2;
         int x = 2;
         int y = 0;
@@ -183,20 +199,66 @@ public class PelikuutioTest {
      */
     @Test
     public void testRistiSuora() {
-        System.out.println("ristiSuora");
+        System.out.println("Pelikuutio: ristiSuora");
+        
         char[][] tila;
-        tila = new char[][]{{' ','x',' '},{' ','x',' '},{' ','x',' '}};
+        tila = new char[][]{{'x',' ',' '},{'x',' ',' '},{'x',' ',' '}};
         boolean result = pst.ristiSuora(tila);
         assertTrue(result);
-
+        
         char[][] tila2;
-        tila2 = new char[][]{{' ','o',' '},{' ','o',' '},{' ','o',' '}};
+        tila2 = new char[][]{{' ','x',' '},{' ','x',' '},{' ','x',' '}};
         result = pst.ristiSuora(tila2);
+        assertTrue(result);
+
+        char[][] tila3;
+        tila3 = new char[][]{{' ',' ','x'},{' ',' ','x'},{' ',' ','x'}};
+        result = pst.ristiSuora(tila3);
+        assertTrue(result);
+
+        char[][] tila4;
+        tila4 = new char[][]{{'x','x','x'},{' ',' ',' '},{' ',' ',' '}};
+        result = pst.ristiSuora(tila4);
+        assertTrue(result);
+        
+        char[][] tila5;
+        tila5 = new char[][]{{' ',' ',' '},{'x','x','x'},{' ',' ',' '}};
+        result = pst.ristiSuora(tila5);
+        assertTrue(result);
+
+        char[][] tila6;
+        tila6 = new char[][]{{' ',' ',' '},{' ',' ',' '},{'x','x','x'}};
+        result = pst.ristiSuora(tila6);
+        assertTrue(result);
+        
+        char[][] tila7;
+        tila7 = new char[][]{{'x',' ',' '},{' ','x',' '},{' ',' ','x'}};
+        result = pst.ristiSuora(tila7);
+        assertTrue(result);
+        
+        char[][] tila8;
+        tila8 = new char[][]{{' ',' ','x'},{' ','x',' '},{'x',' ',' '}};
+        result = pst.ristiSuora(tila8);
+        assertTrue(result);
+        
+        char[][] tila9;
+        tila9 = new char[][]{{' ','o',' '},{' ','o',' '},{' ','o',' '}};
+        result = pst.ristiSuora(tila9);
         assertFalse(result);
         
-        char[][] tila3;
-        tila3 = new char[][]{{' ','x',' '},{' ','x',' '},{' ',' ',' '}};
-        result = pst.ristiSuora(tila3);
+        char[][] tila10;
+        tila10 = new char[][]{{' ','x',' '},{' ','x',' '},{' ',' ',' '}};
+        result = pst.ristiSuora(tila10);
+        assertFalse(result);
+        
+        char[][] tila11;
+        tila11 = new char[][]{{' ','x',' '},{' ','x',' '},{' ','o',' '}};
+        result = pst.ristiSuora(tila11);
+        assertFalse(result);
+        
+        char[][] tila12;
+        tila12 = new char[][]{{' ','x',' '},{' ','x',' '},{' ',' ','x'}};
+        result = pst.ristiSuora(tila12);
         assertFalse(result);
     }
 
@@ -206,21 +268,68 @@ public class PelikuutioTest {
      */
     @Test
     public void testNollaSuora() {
-        System.out.println("nollaSuora");
+        System.out.println("Pelikuutio: nollaSuora");
+        
         char[][] tila;
-        tila = new char[][]{{' ','x',' '},{' ','x',' '},{' ','x',' '}};
+        tila = new char[][]{{'o',' ',' '},{'o',' ',' '},{'o',' ',' '}};
         boolean result = pst.nollaSuora(tila);
-        assertFalse(result);
-
+        assertTrue(result);
+        
         char[][] tila2;
         tila2 = new char[][]{{' ','o',' '},{' ','o',' '},{' ','o',' '}};
         result = pst.nollaSuora(tila2);
         assertTrue(result);
         
         char[][] tila3;
-        tila3 = new char[][]{{' ','o',' '},{' ','x',' '},{' ','o',' '}};
+        tila3 = new char[][]{{' ',' ','o'},{' ',' ','o'},{' ',' ','o'}};
         result = pst.nollaSuora(tila3);
+        assertTrue(result);
+        
+        char[][] tila4;
+        tila4 = new char[][]{{'o','o','o'},{' ',' ',' '},{' ',' ',' '}};
+        result = pst.nollaSuora(tila4);
+        assertTrue(result);
+        
+        char[][] tila5;
+        tila5 = new char[][]{{' ',' ',' '},{'o','o','o'},{' ',' ',' '}};
+        result = pst.nollaSuora(tila5);
+        assertTrue(result);
+
+        char[][] tila6;
+        tila6 = new char[][]{{' ',' ',' '},{' ',' ',' '},{'o','o','o'}};
+        result = pst.nollaSuora(tila6);
+        assertTrue(result);
+        
+        char[][] tila7;
+        tila7 = new char[][]{{'o',' ',' '},{' ','o',' '},{' ',' ','o'}};
+        result = pst.nollaSuora(tila7);
+        assertTrue(result);
+        
+        char[][] tila8;
+        tila8 = new char[][]{{' ',' ','o'},{' ','o',' '},{'o',' ',' '}};
+        result = pst.nollaSuora(tila8);
+        assertTrue(result);
+        
+        char[][] tila9;
+        tila9 = new char[][]{{' ','x',' '},{' ','x',' '},{' ','x',' '}};
+        result = pst.nollaSuora(tila9);
         assertFalse(result);
+        
+        char[][] tila10;
+        tila10 = new char[][]{{' ','o',' '},{' ','o',' '},{' ',' ',' '}};
+        result = pst.nollaSuora(tila10);
+        assertFalse(result);
+        
+        char[][] tila11;
+        tila11 = new char[][]{{' ','o',' '},{' ','o',' '},{' ','x',' '}};
+        result = pst.nollaSuora(tila11);
+        assertFalse(result);
+        
+        char[][] tila12;
+        tila12 = new char[][]{{' ','o',' '},{' ','o',' '},{' ',' ','o'}};
+        result = pst.nollaSuora(tila12);
+        assertFalse(result);
+        
     }
     
 }
