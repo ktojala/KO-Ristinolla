@@ -13,13 +13,14 @@ public class PeliTest {
     private Pelikuutio kuutio;
     private Kayttoliittyma kayttis;
     
+    
     /**
      * Peli  alkuasetukset luokan Peli testeihin
      */
     @Before
     public void setUp() {
         kayttis = new Kayttoliittyma();
-        peli = new Peli(1);
+        peli = new Peli(1,3,1); 
         kuutio = new Pelikuutio();  
     }
     
@@ -65,7 +66,7 @@ public class PeliTest {
      */
     @Test
     public void testAloitaPeli1() {
-        System.out.println("aloitaPeli1");
+        System.out.println("Peli: aloitaPeli1");
         peli.setPeliohi(true);
         peli.aloitaPeli1(kayttis);
         Tekoaly res = peli.getTekoaly1();

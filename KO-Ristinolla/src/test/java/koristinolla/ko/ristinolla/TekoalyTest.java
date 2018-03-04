@@ -1,4 +1,3 @@
-
 package koristinolla.ko.ristinolla;
 
 import org.junit.After;
@@ -13,8 +12,10 @@ public class TekoalyTest {
     public Tekoaly taly1;
     
     private Pelikuutio kuutio; // pstringiä vastaava char array
-    private int[] stat;      // paras tulos siirtovaihtoehdosta
-    private int[] tulosstat; // siirtojen paremmuuksien arviointeja varten
+    private int vaativuus;     // montako siirtoa eteenpäin tutkitaan
+    private int pelilaji;      // kumpi laji 3D-ristinollasta
+    private int[] stat;       // paras tulos siirtovaihtoehdosta
+    private int[] tulosstat;  // siirtojen paremmuuksien arviointeja varten
     
     private char[] pst;      // pstringiä vastaava char array
     private int ruutuNro;    // kertoo ruudun jota parhaillaan simuloidaan
@@ -31,7 +32,9 @@ public class TekoalyTest {
 //        Peli peli = new Peli();
         this.kuutio = new Pelikuutio();  // tyhja pelikuutio
         char merkki = 'x';
-        this.taly1 = new Tekoaly(kuutio,merkki);
+        this.vaativuus = 3;
+        this.pelilaji = 1;
+        this.taly1 = new Tekoaly(kuutio, merkki, this.vaativuus, this.pelilaji);
 
     }
 
@@ -92,66 +95,77 @@ public class TekoalyTest {
 
     
     /**
-     * Test of etu, of class Tekoaly.
+     * Test of isoEtu, of class Tekoaly.
      * Selvitetään onko tekoalylla (x) iso etu
      */
     @Test
-    public void testEtu() {
-        System.out.println("Tekoaly: etu");
-        char[][] rivi = new char[][]{{'x','x',' '},{' ',' ',' '},{' ',' ',' '}};
-        int result = this.taly1.etu(0,rivi);
+    public void testIsoEtu() {
+        System.out.println("Tekoaly: isoEtu");
+        this.kuutio.setMerkki('x', 1);
+        this.kuutio.setMerkki('x', 2);        
+        this.kuutio.setMerkki(' ', 3);  
+        this.kuutio.setMerkki(' ', 4);
+        this.kuutio.setMerkki(' ', 5);
+        int result = this.taly1.isoEtu();
         int expResult  = 3;
         assertEquals(expResult, result); 
 
-        rivi = new char[][]{{' ','x',' '},{' ','x',' '},{' ',' ',' '}};
-        result = this.taly1.etu(0,rivi);
+        this.kuutio.setMerkki(' ', 1);
+        this.kuutio.setMerkki('x', 5);
+        result = this.taly1.isoEtu();
         expResult  = 8;
         assertEquals(expResult, result);
-        
-        rivi = new char[][]{{' ',' ',' '},{' ','x',' '},{' ',' ',' '}};
-        result = this.taly1.etu(0,rivi);
+ 
+        this.kuutio.setMerkki(' ', 2);
+        result = this.taly1.isoEtu();
         expResult  = -1;
         assertEquals(expResult, result);
         
-        rivi = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
-        result = this.taly1.etu(1,rivi);
+        this.kuutio.setMerkki(' ', 5);
+        result = this.taly1.isoEtu();
         expResult  = -1;
         assertEquals(expResult, result); 
-        
-        result = this.taly1.etu(2,rivi);
+
+        this.kuutio.setMerkki('o', 1);
+        this.kuutio.setMerkki('o', 2); 
+        result = this.taly1.isoEtu();
         expResult  = -1;
         assertEquals(expResult, result); 
     }
 
     
     /**
-     * Test of riski, of class Tekoaly.
+     * Test of isoRiski, of class Tekoaly.
      * Selvitetään onko tekoalylla (x) iso riski
      */
     @Test
-    public void testRiski() {
-        System.out.println("Tekoaly: riski");
-        char[][] rivi = new char[][]{{'o','o',' '},{' ',' ',' '},{' ',' ',' '}};
-        int result = this.taly1.riski(0,rivi);
+    public void testIsoRiski() {
+        System.out.println("Tekoaly: isoRiski");
+        this.kuutio.setMerkki('o', 1);
+        this.kuutio.setMerkki('o', 2); 
+        int result = this.taly1.isoRiski();
         int expResult  = 3;
         assertEquals(expResult, result); 
 
-        rivi = new char[][]{{' ','o',' '},{' ','o',' '},{' ',' ',' '}};
-        result = this.taly1.riski(0,rivi);
+        this.kuutio.setMerkki(' ', 1);
+        this.kuutio.setMerkki('o', 5); 
+        result = this.taly1.isoRiski();
         expResult  = 8;
         assertEquals(expResult, result);
-        
-        rivi = new char[][]{{' ',' ',' '},{' ','o',' '},{' ',' ',' '}};
-        result = this.taly1.riski(0,rivi);
+
+        this.kuutio.setMerkki(' ', 2);
+        result = this.taly1.isoRiski();
         expResult  = -1;
         assertEquals(expResult, result);
         
-        rivi = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
-        result = this.taly1.riski(1,rivi);
+        this.kuutio.setMerkki(' ', 5);
+        result = this.taly1.isoRiski();
         expResult  = -1;
         assertEquals(expResult, result); 
-        
-        result = this.taly1.riski(2,rivi);
+
+        this.kuutio.setMerkki('x', 1);
+        this.kuutio.setMerkki('x', 10);
+        result = this.taly1.isoRiski();
         expResult  = -1;
         assertEquals(expResult, result); 
     }
@@ -181,11 +195,11 @@ public class TekoalyTest {
     public void testRivipisteet() {
         System.out.println("Tekoaly: rivipisteet");
         int result = this.taly1.rivipisteet("xxx");
-        int expResult  = 500;
+        int expResult  = 600;
         assertEquals(expResult, result);
         
         result = this.taly1.rivipisteet("x x");
-        expResult  = 20;
+        expResult  = 25;
         assertEquals(expResult, result);
 
         result = this.taly1.rivipisteet(" o ");

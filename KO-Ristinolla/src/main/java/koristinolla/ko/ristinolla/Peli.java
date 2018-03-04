@@ -5,19 +5,27 @@ package koristinolla.ko.ristinolla;
  */
 public class Peli {
     private int optio;         // pelaaja (1) vai kone (2) konetta vastaan
+    private int vaativuus;     // tekoälyn vaativuustaso
+    private int pelilaji;      // 3D-ristinollan pelilaji
     private Pelikuutio kuutio; // pstringiä vastaava char array
     private boolean peliohi;   // true, jos peli on loppuun pelattu
+
     private Tekoaly taly1;     // yksittäinen tekoäly
     private Tekoaly taly2;     // toinen tekoäly
 
     
 /**
 * Luokan Peli konstruktori
+* 
 * @param optio tekoäly tekoalyä vastaan vai pelaajaa vastaan
+* @param vaativuus montako siirtoa eteenpäin tekoäly tutkii
+* @param pelilaji kuution keskimmäinen osakuutio mukana vai ei
 */
-    public Peli(int optio) {
+    public Peli(int optio, int vaativuus, int pelilaji) {
         this.optio = optio;
         this.peliohi = false;
+        this.vaativuus = vaativuus;
+        this.pelilaji = pelilaji;
         this.kuutio = new Pelikuutio();
     }
 
@@ -77,21 +85,23 @@ public class Peli {
 */
     public void aloitaPeli1(Kayttoliittyma ohjaus) {
 
-        this.taly1 = new Tekoaly(this.kuutio,'x');
+        this.taly1 = new Tekoaly(this.kuutio,'x',this.vaativuus,this.pelilaji);
         if (this.optio == 2) {
-            this.taly2 = new Tekoaly(this.kuutio,'o');
+            this.taly2 = new Tekoaly(this.kuutio,'o',this.vaativuus,this.pelilaji);
         }
         
         int paikkanro;   // paikkanumero pelistringissä
         
+        if (this.pelilaji == 2) {
+            this.kuutio.setMerkki('#',14);
+        }
+        
         while (!peliohi) {
 
             if (this.optio == 1) {
-                
                 paikkanro = ohjaus.pelaajanSiirto(this.kuutio);   // kysytään pelaajan siirto
             
                 if (paikkanro == 0) {
-                    System.out.println("Pelaajan käskystä peli lopetetaan");
                     peliohi = true;
                     return;
                 }
@@ -101,7 +111,14 @@ public class Peli {
                 
                 if ((this.kuutio.nollaSuora(this.kuutio.getTasoT1())) ||  
                     (this.kuutio.nollaSuora(this.kuutio.getTasoT2())) ||
-                    (this.kuutio.nollaSuora(this.kuutio.getTasoT3())) ) 
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT3())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT4())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT5())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT6())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT7())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT8())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT9())) ||
+                    (this.kuutio.nollaSuoraLavistajalla(this.kuutio)) ) 
                     {
                     System.out.println("");
                     System.out.println("Onneksi olkoon, voitit koneen!");
@@ -125,7 +142,15 @@ public class Peli {
                 
                     if ((this.kuutio.ristiSuora(this.kuutio.getTasoT1())) ||
                         (this.kuutio.ristiSuora(this.kuutio.getTasoT2())) ||
-                        (this.kuutio.ristiSuora(this.kuutio.getTasoT3()))) {
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT3())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT4())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT5())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT6())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT7())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT8())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT9())) ||
+                        (this.kuutio.ristiSuoraLavistajalla(this.kuutio)) ) 
+                    {
                         System.out.println("");
                         System.out.println("Tekoäly voitti!");
                         System.out.println("");
@@ -140,7 +165,14 @@ public class Peli {
                 
                 if ((this.kuutio.nollaSuora(this.kuutio.getTasoT1())) ||  
                     (this.kuutio.nollaSuora(this.kuutio.getTasoT2())) ||
-                    (this.kuutio.nollaSuora(this.kuutio.getTasoT3())) ) 
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT3())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT4())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT5())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT6())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT7())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT8())) ||
+                    (this.kuutio.nollaSuora(this.kuutio.getTasoT9())) ||
+                    (this.kuutio.nollaSuoraLavistajalla(this.kuutio)) ) 
                 {
                     System.out.println("");
                     System.out.println("Tekoäly 2 (o) voitti!");
@@ -164,7 +196,15 @@ public class Peli {
                     
                     if ((this.kuutio.ristiSuora(this.kuutio.getTasoT1())) ||
                         (this.kuutio.ristiSuora(this.kuutio.getTasoT2())) ||
-                        (this.kuutio.ristiSuora(this.kuutio.getTasoT3()))) {
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT3())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT4())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT5())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT6())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT7())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT8())) ||
+                        (this.kuutio.ristiSuora(this.kuutio.getTasoT9())) ||
+                        (this.kuutio.ristiSuoraLavistajalla(this.kuutio)) ) 
+                    {
                         System.out.println("");
                         System.out.println("Tekoäly 1 (x) voitti!");
                         System.out.println("");

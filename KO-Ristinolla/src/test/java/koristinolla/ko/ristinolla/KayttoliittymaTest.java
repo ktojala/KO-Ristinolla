@@ -1,6 +1,5 @@
 package koristinolla.ko.ristinolla;
 
-// import java.io.ByteArrayInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,7 +19,7 @@ public class KayttoliittymaTest {
     @Before
     public void setUp() {
         kayttis = new Kayttoliittyma();
-        peli = new Peli(1);
+        peli = new Peli(1,3,1);
     }
 
     
@@ -35,7 +34,7 @@ public class KayttoliittymaTest {
 //        System.setIn(in);
         int result = kayttis.getOptio();
 
-        System.setIn(System.in);
+//        System.setIn(System.in);
         
         int expResult  = 1;
         assertEquals(expResult, result); 

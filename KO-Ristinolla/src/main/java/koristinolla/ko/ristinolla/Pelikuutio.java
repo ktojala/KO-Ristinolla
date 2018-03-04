@@ -1,4 +1,3 @@
-
 package koristinolla.ko.ristinolla;
 
 /**
@@ -17,10 +16,7 @@ public class Pelikuutio {
 /**
 * Luokan Pelikuutio konstruktori
 */
-//* @param lkm kuution kokotekijä
-//    public Pelikuutio(int lkm) {
-    public Pelikuutio() {
-//        this.lkm = lkm;           
+    public Pelikuutio() {       
         this.pst = new char[28];
 // alustetaan tyhjät pelitaulut pelistringiin josta tehdään char-taulukko
 // pst:n numerointi:    0123456789012345678901234567
@@ -28,6 +24,17 @@ public class Pelikuutio {
         this.pst = this.pstring.toCharArray();
     }
 
+    
+/**
+*  Metodi asettaa pelikuutioon halutun pelitilanteen merkkijonona
+* 
+* @param this.pstring pelitilanne yksinkertaisena merkkijonona
+*/
+    public void setPstring(String tilanne) {
+        this.pstring = tilanne;
+        this.pst = this.pstring.toCharArray();
+    }
+    
     
 /**
 *  Metodi palauttaa pelikuution merkkijonona
@@ -69,6 +76,27 @@ public class Pelikuutio {
     }
 
 
+/**
+*  Metodi tulostaa peliruudukon ja pelitilanteen pelistringistä pst
+* 
+* @param kuutio 'pelistring' jossa senhetkinen pelitilanne 
+*/
+    public void tulostaTama(Pelikuutio kuutio) {
+
+        System.out.println("    1   2   3            1   2   3            1   2   3  ");
+        System.out.println("  -------------        -------------        -------------");
+//        for (int i = 0; i < this.lkm; i++) {
+        for (int i = 0; i < 3; i++) {
+            System.out.print(i + 1 + " | " + kuutio.pst[3*i+1] + " | " + kuutio.pst[3*i+2] + " | " + kuutio.pst[3*i+3] + " |      ");
+            System.out.print(i + 1 + " | " + kuutio.pst[9+3*i+1] + " | " + kuutio.pst[9+3*i+2] + " | " + kuutio.pst[9+3*i+3] + " |      ");
+            System.out.println(i + 1 + " | " + kuutio.pst[18+3*i+1] + " | " + kuutio.pst[18+3*i+2] + " | " + kuutio.pst[18+3*i+3] + " |");
+        }
+        System.out.println("  -------------        -------------        -------------");
+        System.out.println("  ---ylätaso---        ----keski----        ---alataso---");
+        System.out.println("");
+    }
+    
+    
 /**
 * Apumetodi muuntaa peliruudun 3D-koordinaatit yhdeksi yksiselitteiseksi 
 * ja yksiulotteiseksi ruutuluvuksi
@@ -124,21 +152,6 @@ public class Pelikuutio {
         
         return this.pst[paikka];
     } 
-
-
-/**
-* Metodi kertoo pelistringin halutusta paikasta merkin
-* 
-* @param t kerros 3-ulotteisessa peliruudukossa
-* @param x kerroksen vaakarivi 3-ulotteisen peliruudukon 2D-kuvassa
-* @param y kerroksen sarake 3-ulotteisen peliruudukon 2D-kuvassa 
-* 
-* @return  kerkki pelistringin paikasta paikka
- */
-    public char getMerkki(int t, int x, int y) {
-        int paikka = muunna3(t,x,y);
-        return this.pst[paikka];
-    } 
     
     
 /**
@@ -191,7 +204,109 @@ public class Pelikuutio {
         return taso;
     }
 
-     
+    
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  kunkin tason vasen sarake char[3][3]-taulukkona
+ */
+    public char[][] getTasoT4() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[1+3*i+j*9];
+            }
+        }
+        return taso;
+    }
+    
+
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  kunkin tason keskisarake char[3][3]-taulukkona
+ */
+    public char[][] getTasoT5() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[2+3*i+j*9];
+            }
+        }
+        return taso;
+    }
+    
+    
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  kunkin tason oikea sarake char[3][3]-taulukkona
+ */
+    public char[][] getTasoT6() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[3+3*i+j*9];
+            }
+        }
+        return taso;
+    }
+
+    
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  kunkin tason ylin rivi char[3][3]-taulukkona
+ */
+    public char[][] getTasoT7() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[1+9*i+j];
+            }
+        }
+        return taso;
+    }
+
+    
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  kunkin tason keskirivi char[3][3]-taulukkona
+ */
+    public char[][] getTasoT8() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[4+9*i+j];
+            }
+        }
+        return taso;
+    }
+
+    
+/**
+* Metodi tuottaa pelistring-merkkijonotaulusta halutun 3x3-taulukon
+* 
+* @return  kunkin tason alin rivi char[3][3]-taulukkona
+ */
+    public char[][] getTasoT9() {
+        
+        char[][] taso = new char[3][3];
+        for (int i=0;i<3; i++) {
+            for (int j=0;j<3; j++) {
+                taso[i][j] = this.pst[7+9*i+j];
+            }
+        }
+        return taso;
+    }    
+    
+    
 /**
 * Metodi tarkistaa, onko annettu 3x3 peliruudukko merkitön
 * 
@@ -369,4 +484,37 @@ public class Pelikuutio {
         }
         return false;
     } 
+
+
+/**
+*  Metodi tarkistaa, onko merkillä 'o' ruudukossa voittolinja kuution lävistäjillä
+* 
+* @param cube tutkittava pelikuutio
+* 
+* @return true: kuution lävistäjältä löytyy kolme nollaa peräkkäin
+*/
+    public boolean nollaSuoraLavistajalla(Pelikuutio cube) {
+        if ((cube.getMerkki(1)=='o') && (cube.getMerkki(14)=='o') && (cube.getMerkki(27)=='o')) return true;
+        if ((cube.getMerkki(3)=='o') && (cube.getMerkki(14)=='o') && (cube.getMerkki(25)=='o')) return true;
+        if ((cube.getMerkki(7)=='o') && (cube.getMerkki(14)=='o') && (cube.getMerkki(21)=='o')) return true;
+        if ((cube.getMerkki(9)=='o') && (cube.getMerkki(14)=='o') && (cube.getMerkki(19)=='o')) return true;
+        return false;
+    }
+
+    
+/**
+*  Metodi tarkistaa, onko merkillä 'x' ruudukossa voittolinja kuution lävistäjillä
+* 
+* @param cube tutkittava pelikuutio
+* 
+* @return true: kuution lävistäjältä löytyy kolme nollaa peräkkäin
+*/
+    public boolean ristiSuoraLavistajalla(Pelikuutio cube) {
+        if ((cube.getMerkki(1)=='x') && (cube.getMerkki(14)=='x') && (cube.getMerkki(27)=='x')) return true;
+        if ((cube.getMerkki(3)=='x') && (cube.getMerkki(14)=='x') && (cube.getMerkki(25)=='x')) return true;
+        if ((cube.getMerkki(7)=='x') && (cube.getMerkki(14)=='x') && (cube.getMerkki(21)=='x')) return true;
+        if ((cube.getMerkki(9)=='x') && (cube.getMerkki(14)=='x') && (cube.getMerkki(19)=='x')) return true;
+        return false;
+    }
+    
 }
