@@ -24,17 +24,7 @@ public class Kayttoliittyma {
         this.lukija = new Scanner(System.in);
     }
 
-
     
-/**
-* Tulostetaan alkutekstejä
-* @param luku haluttu pelilaji 1 tai 2
-*/
-    public void setPelilaji(int luku) {
-        this.pelilaji = luku;
-    }
-    
-        
 /**
 * Tulostetaan alkutekstejä
 */
@@ -71,7 +61,7 @@ public class Kayttoliittyma {
                 return;
             }
             Peli uuspeli = new Peli(this.optio, this.vaativuus, this.pelilaji);   
-            uuspeli.aloitaPeli1(this);
+            uuspeli.aloitaPeli(this);
             aloita = kysyUudestaPelista();
 
         } 
@@ -231,7 +221,7 @@ public class Kayttoliittyma {
             System.out.println("Tekoälyn miettimisaika kasvaa jyrkästi vaativuustason kasvaessa.");
             System.out.println("Vaativuustasolla 3 tekoäly on vielä suhteellisen nopea. ");
             System.out.println("");
-            System.out.println(" Valitse vaativuustaso  (luku väliltä 2..5");
+            System.out.println(" Valitse vaativuustaso  (luku väliltä 2..5)");
             System.out.println("");
             System.out.print("> ");
             valinta = lukija.nextLine();
@@ -422,7 +412,7 @@ public class Kayttoliittyma {
                     break;
                 case 4 :
                     System.out.println("");
-                    System.out.println("Onneksi olkoon, voitit koneen!");
+                    System.out.println("Onneksi olkoon, voitit tekoälyn!");
                     System.out.println("");
                     break;
                 case 5 :

@@ -68,7 +68,7 @@ public class PeliTest {
     public void testAloitaPeli1() {
         System.out.println("Peli: aloitaPeli1");
         peli.setPeliohi(true);
-        peli.aloitaPeli1(kayttis);
+        peli.aloitaPeli(kayttis);
         Tekoaly res = peli.getTekoaly1();
         char result = res.getmunMerkki();
         char expResult  = 'x';

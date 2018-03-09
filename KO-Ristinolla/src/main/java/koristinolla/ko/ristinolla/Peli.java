@@ -83,7 +83,7 @@ public class Peli {
 * 
 * @param ohjaus pelin käyttöliittymä
 */
-    public void aloitaPeli1(Kayttoliittyma ohjaus) {
+    public void aloitaPeli(Kayttoliittyma ohjaus) {
 
         this.tekoaly1 = new Tekoaly(this.kuutio,'x',this.vaativuus,this.pelilaji);
         if (this.optio == 2) {

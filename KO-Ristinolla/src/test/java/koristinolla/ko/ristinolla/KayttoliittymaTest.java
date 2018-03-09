@@ -67,20 +67,6 @@ public class KayttoliittymaTest {
         assertEquals(expResult, result);
         
     }
-    
-    
-    /**
-     * Test of onkoSyoteOK, pelilaji2, of class Kayttoliittyma.
-     */
-    @Test
-    public void testOnkoSyoteOKPelilaji2() {
-        System.out.println("Kayttoliittyma: onkoSyoteOK, pelilaji 2");
-        this.kayttis.setPelilaji(2);
-        int result = this.kayttis.onkoSyoteOK(14);
-        int expResult  = -1;
-        assertEquals(expResult, result);
-        this.kayttis.setPelilaji(1);
-        
-    }
+
     
 }
