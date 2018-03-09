@@ -34,11 +34,53 @@ public class KayttoliittymaTest {
 //        ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes());
 //        System.setIn(in);
         int result = kayttis.getOptio();
-
 //        System.setIn(System.in);
-        
         int expResult  = 1;
         assertEquals(expResult, result); 
+    }
+    
+    
+    /**
+     * Test of onkoSyoteOK, of class Kayttoliittyma.
+     */
+    @Test
+    public void testOnkoSyoteOK() {
+        System.out.println("Kayttoliittyma: onkoSyoteOK");
+        int result = this.kayttis.onkoSyoteOK(7);
+        int expResult  = -1;
+        assertEquals(expResult, result);
+        
+        result = this.kayttis.onkoSyoteOK(111);
+        expResult  = 1;
+        assertEquals(expResult, result);
+        
+        result = this.kayttis.onkoSyoteOK(010);
+        expResult  = -1;
+        assertEquals(expResult, result);
+        
+        result = this.kayttis.onkoSyoteOK(-1);
+        expResult  = -1;
+        assertEquals(expResult, result);
+        
+        result = this.kayttis.onkoSyoteOK(242);
+        expResult  = -1;
+        assertEquals(expResult, result);
+        
+    }
+    
+    
+    /**
+     * Test of onkoSyoteOK, pelilaji2, of class Kayttoliittyma.
+     */
+    @Test
+    public void testOnkoSyoteOKPelilaji2() {
+        System.out.println("Kayttoliittyma: onkoSyoteOK, pelilaji 2");
+        this.kayttis.setPelilaji(2);
+        int result = this.kayttis.onkoSyoteOK(14);
+        int expResult  = -1;
+        assertEquals(expResult, result);
+        this.kayttis.setPelilaji(1);
+        
     }
     
 }

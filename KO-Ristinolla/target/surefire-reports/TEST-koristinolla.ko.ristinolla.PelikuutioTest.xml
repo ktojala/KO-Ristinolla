@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="koristinolla.ko.ristinolla.PelikuutioTest" time="0.002" errors="0" skipped="0">
+<testsuite tests="17" failures="0" name="koristinolla.ko.ristinolla.PelikuutioTest" time="0.005" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_51\jre\bin"/>
@@ -69,7 +69,13 @@
   <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testMuunna3" time="0"/>
   <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testSetMerkki" time="0"/>
   <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetPst" time="0"/>
-  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT1" time="0.001"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT1" time="0"/>
   <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT2" time="0"/>
   <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT3" time="0"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT4" time="0"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT5" time="0"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT6" time="0"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT7" time="0"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT8" time="0.001"/>
+  <testcase classname="koristinolla.ko.ristinolla.PelikuutioTest" name="testGetTasoT9" time="0"/>
 </testsuite>

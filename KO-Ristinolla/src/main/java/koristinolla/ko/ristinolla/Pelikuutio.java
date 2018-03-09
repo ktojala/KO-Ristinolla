@@ -65,32 +65,10 @@ public class Pelikuutio {
 
         System.out.println("    1   2   3            1   2   3            1   2   3  ");
         System.out.println("  -------------        -------------        -------------");
-//        for (int i = 0; i < this.lkm; i++) {
         for (int i = 0; i < 3; i++) {
             System.out.print(i + 1 + " | " + this.pst[3*i+1] + " | " + this.pst[3*i+2] + " | " + this.pst[3*i+3] + " |      ");
             System.out.print(i + 1 + " | " + this.pst[9+3*i+1] + " | " + this.pst[9+3*i+2] + " | " + this.pst[9+3*i+3] + " |      ");
             System.out.println(i + 1 + " | " + this.pst[18+3*i+1] + " | " + this.pst[18+3*i+2] + " | " + this.pst[18+3*i+3] + " |");
-        }
-        System.out.println("  -------------        -------------        -------------");
-        System.out.println("  ---ylätaso---        ----keski----        ---alataso---");
-        System.out.println("");
-    }
-
-
-/**
-*  Metodi tulostaa peliruudukon ja pelitilanteen pelistringistä pst
-* 
-* @param kuutio 'pelistring' jossa senhetkinen pelitilanne 
-*/
-    public void tulostaTama(Pelikuutio kuutio) {
-
-        System.out.println("    1   2   3            1   2   3            1   2   3  ");
-        System.out.println("  -------------        -------------        -------------");
-//        for (int i = 0; i < this.lkm; i++) {
-        for (int i = 0; i < 3; i++) {
-            System.out.print(i + 1 + " | " + kuutio.pst[3*i+1] + " | " + kuutio.pst[3*i+2] + " | " + kuutio.pst[3*i+3] + " |      ");
-            System.out.print(i + 1 + " | " + kuutio.pst[9+3*i+1] + " | " + kuutio.pst[9+3*i+2] + " | " + kuutio.pst[9+3*i+3] + " |      ");
-            System.out.println(i + 1 + " | " + kuutio.pst[18+3*i+1] + " | " + kuutio.pst[18+3*i+2] + " | " + kuutio.pst[18+3*i+3] + " |");
         }
         System.out.println("  -------------        -------------        -------------");
         System.out.println("  ---ylätaso---        ----keski----        ---alataso---");

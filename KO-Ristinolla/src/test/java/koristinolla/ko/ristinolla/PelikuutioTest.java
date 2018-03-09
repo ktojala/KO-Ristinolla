@@ -63,9 +63,11 @@ public class PelikuutioTest {
     @Test
     public void testGetTasoT1() {
         System.out.println("Pelikuutio: getGetTasoT1");
-        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        pst.setMerkki('x',2);
+        char[][] expResult = new char[][]{{' ','x',' '},{' ',' ',' '},{' ',' ',' '}};
         char[][] result = pst.getTasoT1();
-        assertArrayEquals(expResult, result); 
+        assertArrayEquals(expResult, result);
+        pst.setMerkki(' ',2);
     }
 
     
@@ -75,9 +77,11 @@ public class PelikuutioTest {
     @Test
     public void testGetTasoT2() {
         System.out.println("Pelikuutio: getGetTasoT2");
-        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        pst.setMerkki('o',10);
+        char[][] expResult = new char[][]{{'o',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         char[][] result = pst.getTasoT2();
-        assertArrayEquals(expResult, result); 
+        assertArrayEquals(expResult, result);
+        pst.setMerkki(' ',10);
     }    
     
 
@@ -87,11 +91,90 @@ public class PelikuutioTest {
     @Test
     public void testGetTasoT3() {
         System.out.println("Pelikuutio: getGetTasoT3");
-        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        pst.setMerkki('o',27);
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ','o'}};
         char[][] result = pst.getTasoT3();
+        assertArrayEquals(expResult, result); 
+        pst.setMerkki(' ',27);
+    }
+
+    
+    /**
+     * Test of getGetTasoT4, of class Pelikuutio.
+     */
+    @Test
+    public void testGetTasoT4() {
+        System.out.println("Pelikuutio: getGetTasoT4");
+        pst.setMerkki('x',13);
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ','x',' '},{' ',' ',' '}};
+        char[][] result = pst.getTasoT4();
+        assertArrayEquals(expResult, result);
+        pst.setMerkki(' ',13);
+    }
+    
+
+    /**
+     * Test of getGetTasoT5, of class Pelikuutio.
+     */
+    @Test
+    public void testGetTasoT5() {
+        System.out.println("Pelikuutio: getGetTasoT5");
+        pst.setMerkki('o',17);
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ','o',' '}};
+        char[][] result = pst.getTasoT5();
+        assertArrayEquals(expResult, result);
+        pst.setMerkki(' ',17);
+    }
+    
+    
+    /**
+     * Test of getGetTasoT6, of class Pelikuutio.
+     */
+    @Test
+    public void testGetTasoT6() {
+        System.out.println("Pelikuutio: getGetTasoT6");
+        
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        char[][] result = pst.getTasoT6();
         assertArrayEquals(expResult, result); 
     }
 
+    
+    /**
+     * Test of getGetTasoT7, of class Pelikuutio.
+     */
+    @Test
+    public void testGetTasoT7() {
+        System.out.println("Pelikuutio: getGetTasoT7");
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        char[][] result = pst.getTasoT7();
+        assertArrayEquals(expResult, result); 
+    }
+
+    
+    /**
+     * Test of getGetTasoT8, of class Pelikuutio.
+     */
+    @Test
+    public void testGetTasoT8() {
+        System.out.println("Pelikuutio: getGetTasoT8");
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        char[][] result = pst.getTasoT8();
+        assertArrayEquals(expResult, result); 
+    }
+
+    
+    /**
+     * Test of getGetTasoT9, of class Pelikuutio.
+     */
+    @Test
+    public void testGetTasoT9() {
+        System.out.println("Pelikuutio: getGetTasoT9");
+        char[][] expResult = new char[][]{{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        char[][] result = pst.getTasoT9();
+        assertArrayEquals(expResult, result); 
+    }   
+    
     
     /**
      * Test of setMerkki, of class Pelikuutio.

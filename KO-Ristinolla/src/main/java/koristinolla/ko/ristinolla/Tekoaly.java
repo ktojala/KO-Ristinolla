@@ -70,7 +70,7 @@ public class Tekoaly {
         int paikkanro;
         if (this.ekaSiirto && this.munMerkki=='o') {
             paikkanro = rd.nextInt(27)+1;
-            paikkanro = 11;
+//            paikkanro = 11;     // tarvittiin tutkittaessa eri aloituksia
             
             if (this.pelilaji == 2) {    // pelilajissa 2 paikka 14 ei käytössä
                 while (paikkanro == 14) paikkanro = rd.nextInt(27)+1;
@@ -202,8 +202,6 @@ public class Tekoaly {
 *  Nollan pelivuoro pelipuusssa (heuristinen versio)
 * 
 * @param syvyys kuinka syvällä pelipuussa ollaan?
-// * @param tasokoodi tutkittavana oleva 3x3 taso
-// * @param tila pelitilanne tasoruudukolla
 * @param kuutio pelitilanne pelistringissä
 * 
 * @return palautus: minimax-algoritmin mukainen palautus
@@ -217,10 +215,6 @@ public class Tekoaly {
         } else {     // tutkitaan seuraava syvyystaso
             
             int[] evalStat1  = new int[28];  // Tämän kerroksen evaluointi      
-            for (int i = 0; i < 28; i++) {
-                evalStat1[i] = 0; // **
-            }
-
             for (int i = 1; i < 28; i++) {
                 if (kuutio.getMerkki(i) == ' ') {
                     kuutio.setMerkki('o',i);
@@ -234,12 +228,6 @@ public class Tekoaly {
 // Minimax-algoritmissa tekoäly valitsee parilliselta syvyystasolta palautetuista 
 // arvoista pienimmän (myworst) ja parittomalta syvyystasolta palautetuista 
 // arvoista suurimman (mybest). (Seuraavat 5 riviä vain kehitysvaiheeseen.)
-
-//            System.out.println("mM Syvyys " + this.munMerkki + " " + syvyys);
-//            for (int i = 1; i < 28; i++) {
-//                System.out.println("i ev(i) "+ i + " " + evalStat1[i]);
-//            }
-//             kuutio.tulostaTama(kuutio);
 
             int palautus;
             if (syvyys %2 == 1) {   // Pariton taso palauttaa pienimmän
@@ -259,7 +247,6 @@ public class Tekoaly {
                 } 
                 palautus = suurin;
             }
-//            System.out.println("uR palauttaa " +  palautus);  
             return palautus; 
         }
     }
@@ -269,8 +256,6 @@ public class Tekoaly {
 *  Ristin pelivuoro pelipuussa (heuristinen versio)
 * 
 * @param syvyys kuinka syvällä pelipuussa ollaan?
-// * @param tasokoodi tutkittavana oleva 3x3 taso
-// * @param tila pelitilanne tietyllä 3x3 ruudukolla 
 * @param kuutio pelitilanne kuutiossa 
 * 
 * @return palautus: minimax-algoritmin mukainen palautus
@@ -284,10 +269,6 @@ public class Tekoaly {
         } else {     // tutkitaan seuraava syvyystaso
             
             int[] evalStat1  = new int[28];  // Tämän kerroksen evaluointi
-            for (int i = 0; i < 28; i++) {
-                evalStat1[i] = 0;
-            }
-
             for (int i = 1; i < 28; i++) {
                 if (kuutio.getMerkki(i) == ' ') {
                     kuutio.setMerkki('x',i);
@@ -301,12 +282,6 @@ public class Tekoaly {
 // Minimax-algoritmissa tekoäly valitsee parilliselta syvyystasolta palautetuista 
 // arvoista pienimmän (myworst) ja parittomalta syvyystasolta palautetuista 
 // arvoista suurimman (mybest). (Seuraavat 5 riviä vain kehitysvaiheeseen.)
-
-//            System.out.println("Syvyys " + this.munMerkki + " " +  syvyys);
-//            for (int i = 1; i < 28; i++) {
-//                System.out.println("i ev(i) "+ i + " " + evalStat1[i]);
-//            }
-//            kuutio.tulostaTama(kuutio);
 
             int palautus;
             if (syvyys %2 == 1) {     // Pariton taso palauttaa pienimmän
@@ -326,7 +301,6 @@ public class Tekoaly {
                 }
                 palautus = suurin;
             }
-//            System.out.println("uR palauttaa " +  palautus);
             return palautus;
         }  
     }
@@ -492,9 +466,16 @@ public class Tekoaly {
     }
     
     
-
+/**
+* Apumetodin avulla tehdään kolmesta luvusta kolmen luvun int-taulukko.
+* 
+* @param n1 1.luku
+* @param n2 2.luku
+* @param n3 3.luku
+* 
+* @return p, kolmen kokonaisluvun taulukko
+*/
     public int[] teeArray(int n1, int n2, int n3) {
-        
         int[] p = new int[3];
         p[0] = n1;
         p[1] = n2;

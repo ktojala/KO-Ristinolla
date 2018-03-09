@@ -91,9 +91,9 @@ public class Peli {
         }
         
         int paikkanro;   // paikkanumero pelistringissä
-        long aika1, aika2; // aikatestaus
-        int aikaind = 0;
-        long[] aikatau = new long [100];
+//        long aika1, aika2; // aikatestaus
+//        int aikaind = 0;
+//        long[] aikatau = new long [100];      // testivaiheen taulukko
         
         if (this.pelilaji == 2) {
             this.kuutio.setMerkki('#',14);
@@ -123,18 +123,14 @@ public class Peli {
                     (this.kuutio.nollaSuora(this.kuutio.getTasoT9())) ||
                     (this.kuutio.nollaSuoraLavistajalla(this.kuutio)) ) 
                     {
-                    System.out.println("");
-                    System.out.println("Onneksi olkoon, voitit koneen!");
-                    System.out.println("");
-                    peliohi = true;
+                        ohjaus.tulostaPelinTulos(4);
+                        peliohi = true;
                     }
             
 //  Jos tyhjiä ruutuja ei ole, pelin täytyy olla tasapeli.
                 if (!this.kuutio.tyhjia()) {
                     peliohi = true;
-                    System.out.println("");
-                    System.out.println("TASAPELI");
-                    System.out.println("");
+                    ohjaus.tulostaPelinTulos(3);
                 }
 
                 if (!peliohi) {
@@ -155,19 +151,17 @@ public class Peli {
                         (this.kuutio.ristiSuora(this.kuutio.getTasoT9())) ||
                         (this.kuutio.ristiSuoraLavistajalla(this.kuutio)) ) 
                     {
-                        System.out.println("");
-                        System.out.println("Tekoäly voitti!");
-                        System.out.println("");
+                        ohjaus.tulostaPelinTulos(5);
                         this.peliohi = true;
                     }
                 }
                 
             } else {     // ensimmäinen siirto saadaan tekoälyltä 2 eli 'o'
-                aika1 = System.currentTimeMillis();
+//                aika1 = System.currentTimeMillis();
                 paikkanro = this.tekoaly2.talysiirto(this.kuutio);
-                aika2 = System.currentTimeMillis();
-                aikatau[aikaind]= aika2-aika1;
-                aikaind++;
+//                aika2 = System.currentTimeMillis();
+//                aikatau[aikaind]= aika2-aika1;
+//                aikaind++;
                     
                 this.kuutio.setMerkki('o',paikkanro);
                 this.kuutio.tulostaPst();
@@ -183,26 +177,23 @@ public class Peli {
                     (this.kuutio.nollaSuora(this.kuutio.getTasoT9())) ||
                     (this.kuutio.nollaSuoraLavistajalla(this.kuutio)) ) 
                 {
-                    System.out.println("");
-                    System.out.println("Tekoäly 2 (o) voitti!");
-                    System.out.println("");
+                    ohjaus.tulostaPelinTulos(2);
                     peliohi = true;
                 }
             
             //  Jos tyhjiä ruutuja ei ole, pelin täytyy olla tasapeli.
                 if (!this.kuutio.tyhjia()) {
                     peliohi = true;
-                    System.out.println("");
-                    System.out.println("TASAPELI");
-                    System.out.println("");
+                    ohjaus.tulostaPelinTulos(3);
                 }
 
                 if (!peliohi) {
-                    aika1 = System.currentTimeMillis();
+//  Testausvaiheessa tutkittiin tekoälyn siirron miettimisaikaa
+//                    aika1 = System.currentTimeMillis();
                     paikkanro = this.tekoaly1.talysiirto(this.kuutio);
-                    aika2 = System.currentTimeMillis();
-                    aikatau[aikaind]= aika2-aika1;
-                    aikaind++;
+//                    aika2 = System.currentTimeMillis();
+//                    aikatau[aikaind]= aika2-aika1;
+//                    aikaind++;
                     
                     this.kuutio.setMerkki('x',paikkanro);
                     this.kuutio.tulostaPst();
@@ -218,15 +209,13 @@ public class Peli {
                         (this.kuutio.ristiSuora(this.kuutio.getTasoT9())) ||
                         (this.kuutio.ristiSuoraLavistajalla(this.kuutio)) ) 
                     {
-                        System.out.println("");
-                        System.out.println("Tekoäly 1 (x) voitti!");
-                        System.out.println("");
+                        ohjaus.tulostaPelinTulos(1);
                         this.peliohi = true;
                     }
                 }
             }
         }
-// Tulostetaan testausta varten siirron vaatima aika
+// Tulostettiin testausta varten siirron vaatima aika
 //        for (int i = 0; i< aikaind; i++) {
 //            System.out.println(aikatau[i]);
 //        }

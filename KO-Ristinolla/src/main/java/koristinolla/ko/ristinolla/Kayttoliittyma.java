@@ -24,7 +24,17 @@ public class Kayttoliittyma {
         this.lukija = new Scanner(System.in);
     }
 
+
     
+/**
+* Tulostetaan alkutekstejä
+* @param luku haluttu pelilaji 1 tai 2
+*/
+    public void setPelilaji(int luku) {
+        this.pelilaji = luku;
+    }
+    
+        
 /**
 * Tulostetaan alkutekstejä
 */
@@ -39,7 +49,7 @@ public class Kayttoliittyma {
  
     
 /**
-* Tämä metodi luo ja aloittaa uuden 3D-Ristinolla -pelin. 
+* Metodi luo ja aloittaa uuden 3D-Ristinolla -pelin. 
 */
     public void aloitaPeli() {
     
@@ -106,7 +116,7 @@ public class Kayttoliittyma {
 
     
 /**
-* Tämä metodi kysyy pelaajalta, haluaako hän pelata itse tekoälyä vastaan.
+* Metodi kysyy pelaajalta, haluaako hän pelata itse tekoälyä vastaan.
 * vai laittaa kaksi tekoälyä pelaamaan toisiaan vastaan. Pelaaja voi myös
 * valita muiden asetusten tekemisen.
 * 
@@ -333,7 +343,7 @@ public class Kayttoliittyma {
                 try{
                     luku = Integer.parseInt(lukija.nextLine());
                     gotCorrect = true;
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     System.err.println("Ei validi numerosyöte. " + e.getMessage());
                     System.out.print("Siirtosi: ");
                 }
@@ -346,7 +356,7 @@ public class Kayttoliittyma {
                 return 0;
             } 
             
-            paikkaNro = syoteOK(luku);
+            paikkaNro = onkoSyoteOK(luku);
             if (paikkaNro != -1) {        
                 if (kuutio.getMerkki(paikkaNro) == ' ') {
                     okSiirto = true;
@@ -366,7 +376,7 @@ public class Kayttoliittyma {
  * 
  * @return -1 jos syöte ei ollut ok, muutoin paikkanumero
  */
-    public int syoteOK(int luku) {
+    public int onkoSyoteOK(int luku) {
         
         int tt = luku / 100;             // taso
         int rr = (luku - (tt * 100)) / 10;   // rivi
@@ -375,13 +385,52 @@ public class Kayttoliittyma {
         
         if ((paikkaNro < 1) || (paikkaNro > 27) || (tt < 1) || (tt > 3) || 
             (rr < 1) || (rr > 3) || (ss < 1) || (ss > 3)) {
-            System.out.println("- Epäkelpo siirto - syöte ei vastaa mitään ruutua");
+            System.out.println("- Syöte ei vastaa mitään ruutua");
             return -1;
         }
         if ((this.pelilaji == 2) && (paikkaNro == 14)) {
-            System.out.println("- Epäkelpo siirto - ruutu ei käytössä tässä pelissä");
+            System.out.println("- Ruutu ei käytössä tässä pelissä");
             return -1;
         }
         return paikkaNro;
     }
+    
+    
+/**
+ * Metodi tulostaa yksittäisen pelin erilaisia lopputuloksia.
+ * 
+ * @param tulos koodi tulostusta varten
+ */
+    public void tulostaPelinTulos(int tulos) {
+        
+            switch (tulos)
+            {
+                case 1 :
+                    System.out.println("");
+                    System.out.println("Tekoäly 1 (x) voitti!");
+                    System.out.println("");
+                    break;
+                case 2 :
+                    System.out.println("");
+                    System.out.println("Tekoäly 2 (o) voitti!");
+                    System.out.println("");
+                    break;
+                case 3 :
+                    System.out.println("");
+                    System.out.println("TASAPELI");
+                    System.out.println("");
+                    break;
+                case 4 :
+                    System.out.println("");
+                    System.out.println("Onneksi olkoon, voitit koneen!");
+                    System.out.println("");
+                    break;
+                case 5 :
+                    System.out.println("");
+                    System.out.println("Tekoäly voitti!");
+                    System.out.println("");
+                    break;
+            }
+    }
+    
 }
