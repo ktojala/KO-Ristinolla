@@ -10,8 +10,8 @@ public class Peli {
     private Pelikuutio kuutio; // pstringiä vastaava char array
     private boolean peliohi;   // true, jos peli on loppuun pelattu
 
-    private Tekoaly taly1;     // yksittäinen tekoäly
-    private Tekoaly taly2;     // toinen tekoäly
+    private Tekoaly tekoaly1;     // yksittäinen tekoäly
+    private Tekoaly tekoaly2;     // toinen tekoäly
 
     
 /**
@@ -53,7 +53,7 @@ public class Peli {
 * @return taly1  tekoalyn merkki
 */
     public Tekoaly getTekoaly1() {
-        return this.taly1;
+        return this.tekoaly1;
     }
     
     
@@ -85,12 +85,15 @@ public class Peli {
 */
     public void aloitaPeli1(Kayttoliittyma ohjaus) {
 
-        this.taly1 = new Tekoaly(this.kuutio,'x',this.vaativuus,this.pelilaji);
+        this.tekoaly1 = new Tekoaly(this.kuutio,'x',this.vaativuus,this.pelilaji);
         if (this.optio == 2) {
-            this.taly2 = new Tekoaly(this.kuutio,'o',this.vaativuus,this.pelilaji);
+            this.tekoaly2 = new Tekoaly(this.kuutio,'o',this.vaativuus,this.pelilaji);
         }
         
         int paikkanro;   // paikkanumero pelistringissä
+        long aika1, aika2; // aikatestaus
+        int aikaind = 0;
+        long[] aikatau = new long [100];
         
         if (this.pelilaji == 2) {
             this.kuutio.setMerkki('#',14);
@@ -135,8 +138,9 @@ public class Peli {
                 }
 
                 if (!peliohi) {
-                
-                    paikkanro = this.taly1.talysiirto(this.kuutio);
+                    
+                    paikkanro = this.tekoaly1.talysiirto(this.kuutio);
+                    
                     this.kuutio.setMerkki('x',paikkanro);
                     this.kuutio.tulostaPst();
                 
@@ -159,7 +163,12 @@ public class Peli {
                 }
                 
             } else {     // ensimmäinen siirto saadaan tekoälyltä 2 eli 'o'
-                paikkanro = this.taly2.talysiirto(this.kuutio);
+                aika1 = System.currentTimeMillis();
+                paikkanro = this.tekoaly2.talysiirto(this.kuutio);
+                aika2 = System.currentTimeMillis();
+                aikatau[aikaind]= aika2-aika1;
+                aikaind++;
+                    
                 this.kuutio.setMerkki('o',paikkanro);
                 this.kuutio.tulostaPst();
                 
@@ -189,8 +198,12 @@ public class Peli {
                 }
 
                 if (!peliohi) {
-                
-                    paikkanro = this.taly1.talysiirto(this.kuutio);
+                    aika1 = System.currentTimeMillis();
+                    paikkanro = this.tekoaly1.talysiirto(this.kuutio);
+                    aika2 = System.currentTimeMillis();
+                    aikatau[aikaind]= aika2-aika1;
+                    aikaind++;
+                    
                     this.kuutio.setMerkki('x',paikkanro);
                     this.kuutio.tulostaPst();
                     
@@ -213,5 +226,9 @@ public class Peli {
                 }
             }
         }
+// Tulostetaan testausta varten siirron vaatima aika
+//        for (int i = 0; i< aikaind; i++) {
+//            System.out.println(aikatau[i]);
+//        }
     }
 }

@@ -158,25 +158,7 @@ public class PelikuutioTest {
         assertFalse(result);
     }
 
-    
-    /**
-     * Test of taynna, of class Pelikuutio.
-     */
-    @Test
-    public void testTaynna() {
-        System.out.println("Pelikuutio: taynna");
-        char[][] taso;
-        taso = new char[][]{{'x','x','o'},{'o','o','x'},{'x','o','x'}};
-        boolean result = pst.taynna(taso);
-        assertTrue(result);
-        
-        char[][] taso2;
-        taso2 = new char[][]{{' ','o',' '},{' ',' ',' '},{' ',' ',' '}};
-        result = pst.merkiton(taso2);
-        assertFalse(result);
-    }
-    
-    
+   
     /**
      * Test of muunna3, of class Pelikuutio.
      */

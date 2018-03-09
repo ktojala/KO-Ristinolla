@@ -56,7 +56,10 @@ public class Kayttoliittyma {
             if (itseVaiTekoAly==2) {
                 this.optio = 2;
             }
-            
+            if (itseVaiTekoAly==4) {
+                System.out.println("Pelin lopetus - hyvää päivänjatkoa!");
+                return;
+            }
             Peli uuspeli = new Peli(this.optio, this.vaativuus, this.pelilaji);   
             uuspeli.aloitaPeli1(this);
             aloita = kysyUudestaPelista();
@@ -66,7 +69,7 @@ public class Kayttoliittyma {
  
     
 /**
-* Tämä metodi kysyy pelaajalta, haluaako hän pelata vielä yhden pelin.
+* Metodi kysyy pelaajalta, haluaako hän pelata vielä yhden pelin.
 * 
 * @return uusi peli "1" vai lopeta "0"
 */
@@ -107,7 +110,7 @@ public class Kayttoliittyma {
 * vai laittaa kaksi tekoälyä pelaamaan toisiaan vastaan. Pelaaja voi myös
 * valita muiden asetusten tekemisen.
 * 
-* @return pelaajan vastaus, pelaako itse tekoälyä vastaan (1) vai ei (2)
+* @return pelaajan vastaus, pelaako itse tekoälyä vastaan (1) vai ei (2) tai Lopetus (4)
 */
     public int kysyItseVaiTekoaly() {
         
@@ -117,13 +120,14 @@ public class Kayttoliittyma {
         
         while (!poistu) {
             System.out.println("");
-            System.out.println("RISTINOLLAN PERUSASETUKSET");
+            System.out.println("3D-RISTINOLLAN PELIVALINTA");
             System.out.println("");
             System.out.println(" Pelaa itse tekoälyä vastaan     (1)");
             System.out.println(" Laita tekoäly tekoälyä vastaan  (2)");
             System.out.println(" Muut asetukset                  (3)");
+            System.out.println(" Lopeta                          (4)");
             System.out.println("");
-            System.out.println("Valintasi (1-3)? ");
+            System.out.println("Valintasi (1-4)? ");
             System.out.print("> ");
             valinta = lukija.nextLine();
             
@@ -139,6 +143,10 @@ public class Kayttoliittyma {
                     break;
                 case "3" :
                     muutAsetukset();
+                    break;
+                case "4" :
+                    val = 4;
+                    poistu = true;
                     break;
                 default:
                     System.out.println("- EPÄKELPO SYÖTE -");
@@ -168,10 +176,10 @@ public class Kayttoliittyma {
             System.out.println("");
             System.out.println("MUUT ASETUKSET");
             System.out.println("");
-            System.out.println(" Tekoälyn vaativuus              (1)");
-            System.out.println(" Pelilajin valinta               (2)");
+            System.out.println(" Pelin vaativuustaso (nyt "+this.vaativuus+")     (1)");
+            System.out.println(" Pelilajin valinta   (nyt "+this.pelilaji+")     (2)");
             System.out.println(" Poistu muista asetuksista       (3)");
-            System.out.println("");
+            System.out.println(""); 
             System.out.print("> ");
             valinta = lukija.nextLine();
         
@@ -213,17 +221,13 @@ public class Kayttoliittyma {
             System.out.println("Tekoälyn miettimisaika kasvaa jyrkästi vaativuustason kasvaessa.");
             System.out.println("Vaativuustasolla 3 tekoäly on vielä suhteellisen nopea. ");
             System.out.println("");
-            System.out.println(" Valitse vaativuustaso  (luku väliltä 1..5");
+            System.out.println(" Valitse vaativuustaso  (luku väliltä 2..5");
             System.out.println("");
             System.out.print("> ");
             valinta = lukija.nextLine();
             
             switch (valinta)
             {
-                case "1" :
-                    val = 1;
-                    poistu = true;
-                    break;
                 case "2" :
                     val = 2;
                     poistu = true;
@@ -246,7 +250,6 @@ public class Kayttoliittyma {
         }
         return val;
     }
-    
     
 
 /**
@@ -273,8 +276,8 @@ public class Kayttoliittyma {
             System.out.println("joten pelilaji 2 saattaa olla hieman haastavampi.");
             System.out.println("");
             System.out.println(" Valinnat:");
-            System.out.println(" Keskikuutio mukana    (1)");
-            System.out.println(" Keskikuutio ei mukana (2)");
+            System.out.println(" Keskikuutio mukana         (1)");
+            System.out.println(" Keskikuutio ei mukana      (2)");
             System.out.println("");
             System.out.print("> ");
             valinta = lukija.nextLine();
@@ -330,7 +333,6 @@ public class Kayttoliittyma {
                 try{
                     luku = Integer.parseInt(lukija.nextLine());
                     gotCorrect = true;
-//                } catch(Exception e) {
                 } catch (Exception e) {
                     System.err.println("Ei validi numerosyöte. " + e.getMessage());
                     System.out.print("Siirtosi: ");
@@ -342,23 +344,43 @@ public class Kayttoliittyma {
                 System.out.println("Pelaajan käskystä peli lopetetaan");
                 System.out.println("");
                 return 0;
-            }
+            } 
             
-            int tt = luku / 100;             // taso
-            int rr = (luku - (tt * 100)) / 10;   // rivi
-            int ss = luku % 10;                  // sarake
-
-            paikkaNro = 1+(tt-1)*9+(rr-1)*3+ss-1;
-            
-            if ((paikkaNro > 0) && (paikkaNro < 28)) {       
+            paikkaNro = syoteOK(luku);
+            if (paikkaNro != -1) {        
                 if (kuutio.getMerkki(paikkaNro) == ' ') {
                     okSiirto = true;
                 } else {
                     System.out.println("- Epäkelpo siirto - ruutu jo varattu!");
                 }
-            } else {
-                System.out.println("- Epäkelpo siirto - syöte ei vastaa mitään ruutua!");
-            }
+            } 
+        }
+        return paikkaNro;
+    }
+    
+    
+/**
+ * Metodi tutkii siirtonumeron kelvollisuuden paikkanumeroksi.
+ * 
+ * @param luku pelaajan syöte pelisiirroksi
+ * 
+ * @return -1 jos syöte ei ollut ok, muutoin paikkanumero
+ */
+    public int syoteOK(int luku) {
+        
+        int tt = luku / 100;             // taso
+        int rr = (luku - (tt * 100)) / 10;   // rivi
+        int ss = luku % 10;                  // sarake
+        int paikkaNro = 1+(tt-1)*9+(rr-1)*3+ss-1;
+        
+        if ((paikkaNro < 1) || (paikkaNro > 27) || (tt < 1) || (tt > 3) || 
+            (rr < 1) || (rr > 3) || (ss < 1) || (ss > 3)) {
+            System.out.println("- Epäkelpo siirto - syöte ei vastaa mitään ruutua");
+            return -1;
+        }
+        if ((this.pelilaji == 2) && (paikkaNro == 14)) {
+            System.out.println("- Epäkelpo siirto - ruutu ei käytössä tässä pelissä");
+            return -1;
         }
         return paikkaNro;
     }

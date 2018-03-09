@@ -27,8 +27,9 @@ public class Pelikuutio {
     
 /**
 *  Metodi asettaa pelikuutioon halutun pelitilanteen merkkijonona
+* (testejä varten erityisesti)
 * 
-* @param this.pstring pelitilanne yksinkertaisena merkkijonona
+* @param tilanne pelitilanne yksinkertaisena merkkijonona
 */
     public void setPstring(String tilanne) {
         this.pstring = tilanne;
@@ -328,27 +329,6 @@ public class Pelikuutio {
     
     
 /**
-* Metodi tarkistaa, onko annettu 3x3 peliruudukko jo täynnä merkkejä
-* 
-* @param tila tutkittava pelitilanteen 3x3 ruudukko
-* 
-* @return true: ruudukossa ei ole tyhjia merkkeja enää
-*/
-    
-    public boolean taynna(char[][] tila) {
-        
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (tila[i][j] == ' ') {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-       
-    
-/**
 * Metodi selvittää, monessako pelikuution ruudussa on merkki
 * 
 * @param kuutio pelikuutio
@@ -383,54 +363,6 @@ public class Pelikuutio {
         return false;
     }
 
-
-/**
-*  Metodi tarkistaa, onko peliruudukossa vielä tyhjiä ruutuja
-* 
-* @return true: ruudukon kaikissa kentissä on risti tai nolla
-*/
-    public boolean tyhjia0() {
-
-        for (int i = 1; i < 10; i++) {
-            if (this.pst[i] == ' ') {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    
-/**
-*  Metodi tarkistaa, onko peliruudukossa vielä tyhjiä ruutuja
-* 
-* @return true: ruudukon kaikissa kentissä on risti tai nolla
-*/
-    public boolean tyhjia1() {
-
-        for (int i = 10; i < 19; i++) {
-            if (this.pst[i] == ' ') {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    
-/**
-*  Metodi tarkistaa, onko peliruudukossa vielä tyhjiä ruutuja
-* 
-* @return true: ruudukon kaikissa kentissä on risti tai nolla
-*/
-    public boolean tyhjia2() {
-
-        for (int i = 19; i < 28; i++) {
-            if (this.pst[i] == ' ') {
-                return true;
-            }
-        }
-        return false;
-    }
-    
     
 /**
 *  Metodi tarkistaa, onko merkillä 'x' ruudukossa voittolinja

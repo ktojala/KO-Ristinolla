@@ -70,11 +70,12 @@ public class Tekoaly {
         int paikkanro;
         if (this.ekaSiirto && this.munMerkki=='o') {
             paikkanro = rd.nextInt(27)+1;
+            paikkanro = 11;
+            
             if (this.pelilaji == 2) {    // pelilajissa 2 paikka 14 ei käytössä
                 while (paikkanro == 14) paikkanro = rd.nextInt(27)+1;
             }
             
-//            paikkanro = 1;
             this.ekaSiirto = false;
             tulostaKoneenSiirto(this.munMerkki,paikkanro);
             return paikkanro;
